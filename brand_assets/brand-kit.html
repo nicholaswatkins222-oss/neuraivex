@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neuraivex — Brand Kit</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg-base:      #060D1F;
+      --bg-surface:   #0D1530;
+      --bg-elevated:  #1A2545;
+      --border:       #243058;
+      --text-primary: #FFFFFF;
+      --text-secondary: #8A9BC0;
+      --text-muted:   #4A5878;
+      --accent-blue:  #38C4F0;
+      --accent-violet:#7C5CE6;
+      --gradient:     linear-gradient(135deg, #38C4F0, #7C5CE6);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, .display {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 64px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section:last-child { border-bottom: none; }
+
+    .section-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      margin-bottom: 32px;
+    }
+
+    /* ── LOGO ── */
+    .logo-wordmark {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .logo-x-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
+    .logo-x {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-node {
+      position: absolute;
+      top: 4px;
+      right: -8px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+      box-shadow: 0 0 8px var(--accent-blue);
+    }
+
+    .logo-arm {
+      position: absolute;
+      top: 7px;
+      right: -20px;
+      width: 14px;
+      height: 1.5px;
+      background: linear-gradient(90deg, var(--accent-blue), transparent);
+    }
+
+    .logo-on-light {
+      background: #F0F4FA;
+      padding: 24px 32px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    .logo-on-light .logo-wordmark {
+      color: var(--bg-base);
+    }
+
+    /* ── COLORS ── */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
+
+    .swatch {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .swatch-block {
+      height: 80px;
+    }
+
+    .swatch-info {
+      background: var(--bg-surface);
+      padding: 12px 14px;
+    }
+
+    .swatch-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .swatch-hex {
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-family: 'Courier New', monospace;
+      margin-top: 2px;
+    }
+
+    .swatch-role {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── TYPOGRAPHY ── */
+    .type-row {
+      margin-bottom: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .type-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .type-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: 'Courier New', monospace;
+      margin-bottom: 12px;
+    }
+
+    .type-display    { font-family: 'Space Grotesk', sans-serif; font-size: 56px; font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; color: var(--text-primary); }
+    .type-h1         { font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; line-height: 1.15; letter-spacing: -0.025em; color: var(--text-primary); }
+    .type-h2         { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 600; line-height: 1.25; letter-spacing: -0.02em; color: var(--text-primary); }
+    .type-h3         { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600; line-height: 1.35; letter-spacing: -0.01em; color: var(--text-primary); }
+    .type-body       { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 400; line-height: 1.7; color: var(--text-secondary); }
+    .type-small      { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 400; line-height: 1.6; color: var(--text-muted); }
+    .type-label      { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-blue); }
+
+    .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 14px 28px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: var(--gradient);
+      color: #fff;
+      box-shadow: 0 4px 24px rgba(56, 196, 240, 0.25), 0 1px 4px rgba(0,0,0,0.4);
+      transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 200ms ease;
+      display: inline-block;
+      text-decoration: none;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 32px rgba(56, 196, 240, 0.35), 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .btn-primary:active { transform: translateY(0) scale(0.99); }
+
+    .btn-secondary {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      padding: 13px 27px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-primary);
+      transition: border-color 200ms ease, background 200ms ease;
+      display: inline-block;
+      text-decoration: none;
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent-blue);
+      background: rgba(56, 196, 240, 0.06);
+    }
+
+    .btn-ghost {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      padding: 13px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: var(--accent-blue);
+      transition: background 200ms ease;
+      display: inline-block;
+      text-decoration: none;
+    }
+    .btn-ghost:hover { background: rgba(56, 196, 240, 0.08); }
+
+    /* ── SPACING ── */
+    .spacing-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .space-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .space-vis {
+      background: linear-gradient(135deg, rgba(56,196,240,0.2), rgba(124,92,230,0.2));
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      width: 100%;
+      min-width: 20px;
+    }
+
+    .space-label {
+      font-size: 10px;
+      font-family: 'Courier New', monospace;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* ── CARD EXAMPLE ── */
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.04) inset;
+    }
+
+    /* ── GRADIENT BAR ── */
+    .gradient-bar {
+      height: 3px;
+      background: var(--gradient);
+      border-radius: 2px;
+      margin-bottom: 48px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div style="background: var(--bg-surface); border-bottom: 1px solid var(--border); padding: 24px 32px; display: flex; align-items: center; justify-content: space-between; max-width: 100%;">
+    <div class="logo-wordmark">
+      NEURAIVE<span class="logo-x-wrap"><span class="logo-x">X</span><span class="logo-node"></span><span class="logo-arm"></span></span>
+    </div>
+    <div style="font-size: 12px; color: var(--text-muted); font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; text-transform: uppercase;">Brand Kit v1.0</div>
+  </div>
+
+  <!-- Logo -->
+  <div class="section">
+    <div class="section-label">01 — Logo</div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px;">
+      <!-- Dark bg -->
+      <div style="background: var(--bg-base); border: 1px solid var(--border); border-radius: 12px; padding: 48px 40px; display: flex; align-items: center; justify-content: center;">
+        <div class="logo-wordmark" style="font-size: 32px;">
+          NEURAIVE<span class="logo-x-wrap"><span class="logo-x">X</span><span class="logo-node"></span><span class="logo-arm"></span></span>
+        </div>
+      </div>
+      <!-- Surface bg -->
+      <div style="background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 48px 40px; display: flex; align-items: center; justify-content: center;">
+        <div class="logo-wordmark" style="font-size: 32px;">
+          NEURAIVE<span class="logo-x-wrap"><span class="logo-x">X</span><span class="logo-node"></span><span class="logo-arm"></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div style="background: var(--bg-elevated); border-radius: 10px; padding: 20px 24px;">
+      <div class="type-label" style="margin-bottom: 12px;">Usage rules</div>
+      <ul style="color: var(--text-secondary); font-size: 13px; line-height: 2; list-style: none; padding: 0;">
+        <li>→ Always use on dark backgrounds (#060D1F or #0D1530 preferred)</li>
+        <li>→ Minimum display size: 120px wide</li>
+        <li>→ Never stretch, rotate, or recolor the wordmark</li>
+        <li>→ Maintain clear space of at least 1× the cap-height on all sides</li>
+        <li>→ Gradient X treatment must be preserved — do not flatten to solid color</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Colors -->
+  <div class="section">
+    <div class="section-label">02 — Color Palette</div>
+
+    <div class="color-grid">
+      <div class="swatch">
+        <div class="swatch-block" style="background: #060D1F;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Base</div>
+          <div class="swatch-hex">#060D1F</div>
+          <div class="swatch-role">Page background</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background: #0D1530;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Surface</div>
+          <div class="swatch-hex">#0D1530</div>
+          <div class="swatch-role">Cards, nav</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background: #1A2545;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Elevated</div>
+          <div class="swatch-hex">#1A2545</div>
+          <div class="swatch-role">Hover states, chips</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background: #243058;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Border</div>
+          <div class="swatch-hex">#243058</div>
+          <div class="swatch-role">Dividers, outlines</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background: #38C4F0;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Accent Blue</div>
+          <div class="swatch-hex">#38C4F0</div>
+          <div class="swatch-role">Primary accent, links</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background: #7C5CE6;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Accent Violet</div>
+          <div class="swatch-hex">#7C5CE6</div>
+          <div class="swatch-role">Gradient end, glow</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background: linear-gradient(135deg, #38C4F0, #7C5CE6);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Brand Gradient</div>
+          <div class="swatch-hex">#38C4F0 → #7C5CE6</div>
+          <div class="swatch-role">CTAs, logo X, highlights</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background: #FFFFFF;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">White</div>
+          <div class="swatch-hex">#FFFFFF</div>
+          <div class="swatch-role">Primary text</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background: #8A9BC0;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Secondary Text</div>
+          <div class="swatch-hex">#8A9BC0</div>
+          <div class="swatch-role">Body copy, subtitles</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Typography -->
+  <div class="section">
+    <div class="section-label">03 — Typography</div>
+
+    <div style="margin-bottom: 32px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; display: flex; gap: 48px;">
+      <div>
+        <div class="type-label" style="margin-bottom: 6px;">Display / Headings</div>
+        <div style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--text-primary);">Space Grotesk</div>
+        <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Google Fonts — weights 500, 600, 700</div>
+      </div>
+      <div>
+        <div class="type-label" style="margin-bottom: 6px;">Body / UI</div>
+        <div style="font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 400; color: var(--text-primary);">Inter</div>
+        <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Google Fonts — weights 300, 400, 500</div>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">Space Grotesk 700 · 56px · -0.03em · lh 1.1 · Display</div>
+      <div class="type-display">Automate the <span class="gradient-text">work that slows you down</span></div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">Space Grotesk 700 · 40px · -0.025em · lh 1.15 · H1</div>
+      <div class="type-h1">AI systems that run while you sleep</div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">Space Grotesk 600 · 28px · -0.02em · lh 1.25 · H2</div>
+      <div class="type-h2">What we build for you</div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">Space Grotesk 600 · 20px · -0.01em · lh 1.35 · H3</div>
+      <div class="type-h3">Cold outreach on autopilot</div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">Inter 400 · 16px · lh 1.7 · Body</div>
+      <div class="type-body" style="max-width: 560px;">We build AI automation systems that handle your cold outreach end-to-end — from lead sourcing to personalized messaging — so you can focus on closing deals, not filling pipelines.</div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">Inter 400 · 13px · lh 1.6 · Small / Caption</div>
+      <div class="type-small">Results vary by industry and list quality. Book a call to discuss your specific situation.</div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">Space Grotesk 600 · 11px · 0.14em · uppercase · Label</div>
+      <div class="type-label">What we do</div>
+    </div>
+  </div>
+
+  <!-- Buttons & CTAs -->
+  <div class="section">
+    <div class="section-label">04 — Buttons & CTAs</div>
+
+    <div class="btn-grid" style="margin-bottom: 32px;">
+      <a class="btn-primary" href="#">Book a Free Call</a>
+      <a class="btn-secondary" href="#">See How It Works</a>
+      <a class="btn-ghost" href="#">Learn more →</a>
+    </div>
+
+    <div style="background: var(--bg-elevated); border-radius: 10px; padding: 20px 24px;">
+      <div class="type-label" style="margin-bottom: 12px;">CTA copy rules</div>
+      <ul style="color: var(--text-secondary); font-size: 13px; line-height: 2; list-style: none; padding: 0;">
+        <li>→ Primary CTA is always "Book a Free Call" — one per page, above the fold</li>
+        <li>→ Use action verbs: Book, Get, Start, See — never "Submit" or "Click here"</li>
+        <li>→ Primary button uses Brand Gradient with blue glow shadow</li>
+        <li>→ Never use more than one primary CTA per section</li>
+        <li>→ All buttons need hover + focus-visible + active states</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Spacing tokens -->
+  <div class="section">
+    <div class="section-label">05 — Spacing Tokens</div>
+
+    <div class="spacing-row">
+      <div class="space-block">
+        <div class="space-vis" style="height: 4px;"></div>
+        <div class="space-label">4px · xs</div>
+      </div>
+      <div class="space-block">
+        <div class="space-vis" style="height: 8px;"></div>
+        <div class="space-label">8px · sm</div>
+      </div>
+      <div class="space-block">
+        <div class="space-vis" style="height: 16px;"></div>
+        <div class="space-label">16px · md</div>
+      </div>
+      <div class="space-block">
+        <div class="space-vis" style="height: 24px;"></div>
+        <div class="space-label">24px · lg</div>
+      </div>
+      <div class="space-block">
+        <div class="space-vis" style="height: 32px;"></div>
+        <div class="space-label">32px · xl</div>
+      </div>
+      <div class="space-block">
+        <div class="space-vis" style="height: 48px;"></div>
+        <div class="space-label">48px · 2xl</div>
+      </div>
+      <div class="space-block">
+        <div class="space-vis" style="height: 64px;"></div>
+        <div class="space-label">64px · 3xl</div>
+      </div>
+      <div class="space-block">
+        <div class="space-vis" style="height: 96px;"></div>
+        <div class="space-label">96px · 4xl</div>
+      </div>
+      <div class="space-block">
+        <div class="space-vis" style="height: 128px;"></div>
+        <div class="space-label">128px · 5xl</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px; background: var(--bg-elevated); border-radius: 10px; padding: 20px 24px;">
+      <div class="type-label" style="margin-bottom: 12px;">Layout rules</div>
+      <ul style="color: var(--text-secondary); font-size: 13px; line-height: 2; list-style: none; padding: 0;">
+        <li>→ Section vertical padding: 96px top/bottom (64px on mobile)</li>
+        <li>→ Max content width: 960px, centered</li>
+        <li>→ Card internal padding: 32px</li>
+        <li>→ Component gap (grid/flex): 24px default</li>
+        <li>→ Border radius: 8px buttons · 12px cards · 16px large cards · 24px hero containers</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Component sample -->
+  <div class="section">
+    <div class="section-label">06 — Component Sample</div>
+
+    <div class="card" style="max-width: 480px;">
+      <div class="type-label" style="margin-bottom: 16px;">What you get</div>
+      <div class="type-h3" style="margin-bottom: 12px;">Full-stack cold outreach automation</div>
+      <div class="type-body" style="margin-bottom: 28px;">From lead list to booked meeting — we build the system, you take the calls.</div>
+      <a class="btn-primary" href="#">Book a Free Call</a>
+    </div>
+  </div>
+
+  <!-- Depth system -->
+  <div class="section">
+    <div class="section-label">07 — Depth & Surface System</div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+      <div style="background: #060D1F; border: 1px solid var(--border); border-radius: 12px; padding: 24px;">
+        <div class="type-label" style="margin-bottom: 8px;">Base</div>
+        <div style="font-size: 12px; color: var(--text-muted);">#060D1F — page bg, behind-the-fold areas</div>
+      </div>
+      <div style="background: #0D1530; border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.3);">
+        <div class="type-label" style="margin-bottom: 8px;">Elevated</div>
+        <div style="font-size: 12px; color: var(--text-muted);">#0D1530 — cards, nav, modals</div>
+      </div>
+      <div style="background: #1A2545; border: 1px solid #2D3D65; border-radius: 12px; padding: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.05) inset;">
+        <div class="type-label" style="margin-bottom: 8px;">Floating</div>
+        <div style="font-size: 12px; color: var(--text-muted);">#1A2545 — tooltips, dropdowns, hover states</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align: center; padding: 48px 32px; color: var(--text-muted); font-size: 12px; font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.06em;">
+    NEURAIVEX BRAND KIT v1.0 — INTERNAL USE ONLY
+  </div>
+
+</body>
+</html>

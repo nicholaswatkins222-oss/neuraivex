@@ -373,5 +373,42 @@
     </div>
   </footer>
 
+  <script>
+    /* ── CURSOR GLOW ── */
+    const cursorGlow = document.createElement('div');
+    cursorGlow.style.cssText = `
+      position:fixed;pointer-events:none;z-index:9999;
+      width:400px;height:400px;border-radius:50%;
+      background:radial-gradient(circle,rgba(56,196,240,0.07) 0%,transparent 70%);
+      transform:translate(-50%,-50%);
+      transition:left 0.12s ease,top 0.12s ease;
+      left:-999px;top:-999px;
+    `;
+    document.body.appendChild(cursorGlow);
+    document.addEventListener('mousemove', e => {
+      cursorGlow.style.left = e.clientX + 'px';
+      cursorGlow.style.top  = e.clientY + 'px';
+    });
+
+    /* ── SCROLL REVEAL ── */
+    const revealStyle = document.createElement('style');
+    revealStyle.textContent = `
+      .reveal{opacity:0;transform:translateY(28px);transition:opacity 600ms ease,transform 600ms cubic-bezier(0.34,1.2,0.64,1);}
+      .reveal.visible{opacity:1;transform:translateY(0);}
+      .reveal-delay-1{transition-delay:80ms;}
+      .reveal-delay-2{transition-delay:160ms;}
+      .reveal-delay-3{transition-delay:240ms;}
+    `;
+    document.head.appendChild(revealStyle);
+
+    document.querySelectorAll('.card, .section-heading, .label').forEach(el => el.classList.add('reveal'));
+    document.querySelectorAll('.steps-grid > div').forEach((el, i) => el.classList.add('reveal', `reveal-delay-${i + 1}`));
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }});
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+
 </body>
 </html>

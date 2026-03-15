@@ -366,6 +366,36 @@
       padding-top: 10px;
     }
 
+    /* ── HERO GRID ── */
+    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(36,48,88,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(36,48,88,0.4) 1px, transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 100%); -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 100%); pointer-events: none; }
+
+    /* ── MARQUEE STRIP ── */
+    .marquee-strip { overflow: hidden; border-top: 1px solid rgba(56,196,240,0.12); border-bottom: 1px solid rgba(56,196,240,0.12); background: rgba(56,196,240,0.025); padding: 13px 0; position: relative; z-index: 1; }
+    .marquee-track { display: flex; gap: 0; animation: marquee-scroll 30s linear infinite; width: max-content; }
+    .marquee-strip:hover .marquee-track { animation-play-state: paused; }
+    @keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .marquee-item { display: inline-flex; align-items: center; gap: 12px; padding: 0 36px; font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; transition: color 200ms ease; }
+    .marquee-item:hover { color: var(--text-secondary); }
+    .marquee-diamond { width: 5px; height: 5px; background: var(--accent-blue); transform: rotate(45deg); opacity: 0.4; flex-shrink: 0; }
+
+    /* ── CARD GRADIENT ACCENT ── */
+    .card-accent { position: relative; overflow: hidden; }
+    .card-accent::before { content: ''; position: absolute; top: 0; left: 20px; right: 20px; height: 1px; background: linear-gradient(90deg, transparent, var(--accent-blue), var(--accent-violet), transparent); opacity: 0.6; }
+
+    /* ── ELEVATED SECTION ── */
+    .section-elevated { background: var(--bg-surface); position: relative; }
+    .section-elevated::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent 0%, var(--accent-blue) 30%, var(--accent-violet) 70%, transparent 100%); opacity: 0.25; }
+    .section-elevated::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent 0%, var(--accent-violet) 30%, var(--accent-blue) 70%, transparent 100%); opacity: 0.25; }
+
+    /* ── SECTION AMBIENT GLOWS ── */
+    .section-glow { position: absolute; border-radius: 50%; pointer-events: none; z-index: 0; }
+
+    /* ── DOT GRID OVERLAY ── */
+    .dot-grid-overlay { position: absolute; inset: 0; background-image: radial-gradient(rgba(56,196,240,0.12) 1px, transparent 1px); background-size: 40px 40px; mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 0%, transparent 100%); -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 0%, transparent 100%); pointer-events: none; z-index: 0; }
+
+    /* ── GLOW DIVIDER ── */
+    .glow-divider { height: 1px; background: linear-gradient(90deg, transparent 0%, rgba(56,196,240,0.3) 30%, rgba(124,92,230,0.3) 70%, transparent 100%); width: 100%; }
+
     /* RESPONSIVE */
     @media (max-width: 768px) {
       nav { padding: 0 20px; }
@@ -384,7 +414,7 @@
   <!-- NAV -->
   <nav>
     <a href="index.html" class="logo">
-      NEURAIVE<span class="logo-x-wrap"><span class="logo-x">X</span><span class="logo-node"></span><span class="logo-arm"></span></span>
+      NEURAIVE<svg width="20" height="17" viewBox="0 0 22 19" fill="none" style="flex-shrink:0;"><defs><linearGradient id="lxg" x1="0" y1="0" x2="22" y2="19" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#38C4F0"/><stop offset="100%" stop-color="#7C5CE6"/></linearGradient></defs><line x1="2" y1="1.5" x2="20" y2="17.5" stroke="url(#lxg)" stroke-width="2.2" stroke-linecap="round"/><line x1="20" y1="1.5" x2="2" y2="17.5" stroke="url(#lxg)" stroke-width="2.2" stroke-linecap="round"/><circle cx="2" cy="1.5" r="2" fill="#38C4F0"/><circle cx="20" cy="1.5" r="2" fill="#7C5CE6"/><circle cx="2" cy="17.5" r="2" fill="#7C5CE6"/><circle cx="20" cy="17.5" r="2" fill="#38C4F0"/><circle cx="11" cy="9.5" r="2.8" fill="var(--bg-base)" stroke="url(#lxg)" stroke-width="1.5"/><circle cx="11" cy="9.5" r="1.2" fill="#38C4F0"/></svg>
     </a>
     <div class="nav-links">
       <a href="services.html" class="nav-link active">Services</a>
@@ -398,6 +428,7 @@
   <section style="padding-top: 140px; padding-bottom: 80px; overflow: hidden; position: relative;">
     <div class="glow-blue"></div>
     <div class="glow-violet"></div>
+    <div class="hero-grid"></div>
 
     <div class="container" style="position: relative; z-index: 2; text-align: center;">
       <div style="margin-bottom: 20px; display: flex; justify-content: center;">
@@ -412,13 +443,37 @@
     </div>
   </section>
 
+  <!-- ── MARQUEE STRIP ── -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span class="marquee-item"><span class="marquee-diamond"></span>Custom Web Design</span>
+      <span class="marquee-item"><span class="marquee-diamond"></span>AI Workflow Automation</span>
+      <span class="marquee-item"><span class="marquee-diamond"></span>B2B Lead Generation</span>
+      <span class="marquee-item"><span class="marquee-diamond"></span>SEO-Optimized Builds</span>
+      <span class="marquee-item"><span class="marquee-diamond"></span>Done-For-You Delivery</span>
+      <span class="marquee-item"><span class="marquee-diamond"></span>Zero Templates</span>
+      <span class="marquee-item"><span class="marquee-diamond"></span>Results-Driven Systems</span>
+      <span class="marquee-item"><span class="marquee-diamond"></span>AI-Powered Outreach</span>
+      <span class="marquee-item"><span class="marquee-diamond"></span>Custom Web Design</span>
+      <span class="marquee-item"><span class="marquee-diamond"></span>AI Workflow Automation</span>
+      <span class="marquee-item"><span class="marquee-diamond"></span>B2B Lead Generation</span>
+      <span class="marquee-item"><span class="marquee-diamond"></span>SEO-Optimized Builds</span>
+      <span class="marquee-item"><span class="marquee-diamond"></span>Done-For-You Delivery</span>
+      <span class="marquee-item"><span class="marquee-diamond"></span>Zero Templates</span>
+      <span class="marquee-item"><span class="marquee-diamond"></span>Results-Driven Systems</span>
+      <span class="marquee-item"><span class="marquee-diamond"></span>AI-Powered Outreach</span>
+    </div>
+  </div>
+
   <!-- SERVICES -->
-  <section style="padding: 48px 0 96px;">
-    <div class="container">
+  <section style="padding: 48px 0 96px; position: relative; overflow: hidden;">
+    <div class="section-glow" style="width:700px;height:700px;background:radial-gradient(circle,rgba(56,196,240,0.05) 0%,transparent 65%);top:-100px;left:50%;transform:translateX(-50%);"></div>
+    <div class="dot-grid-overlay"></div>
+    <div class="container" style="position: relative; z-index: 1;">
       <div style="display: flex; flex-direction: column; gap: 24px;">
 
         <!-- Service 1 -->
-        <div class="card">
+        <div class="card card-accent">
           <div class="service-card-inner" style="display: flex; gap: 0;">
             <div style="flex: 1; padding-right: 40px; border-right: 1px solid var(--border);">
               <div class="icon-wrap" style="margin-bottom: 20px;">
@@ -451,7 +506,7 @@
         </div>
 
         <!-- Service 2 -->
-        <div class="card">
+        <div class="card card-accent">
           <div class="service-card-inner" style="display: flex; gap: 0;">
             <div style="flex: 1; padding-right: 40px; border-right: 1px solid var(--border);">
               <div class="icon-wrap" style="margin-bottom: 20px; background: rgba(124,92,230,0.1); border-color: rgba(124,92,230,0.2);">
@@ -483,7 +538,7 @@
         </div>
 
         <!-- Service 3 -->
-        <div class="card">
+        <div class="card card-accent">
           <div class="service-card-inner" style="display: flex; gap: 0;">
             <div style="flex: 1; padding-right: 40px; border-right: 1px solid var(--border);">
               <div class="icon-wrap" style="margin-bottom: 20px;">
@@ -519,11 +574,10 @@
     </div>
   </section>
 
-  <div class="container"><div class="divider"></div></div>
-
   <!-- SYSTEM OVERVIEW -->
-  <section style="padding: 96px 0;">
-    <div class="container">
+  <section class="section-elevated" style="padding: 96px 0;">
+    <div class="section-glow" style="width:500px;height:500px;background:radial-gradient(circle,rgba(56,196,240,0.06) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+    <div class="container" style="position: relative; z-index: 1;">
       <div style="text-align: center; margin-bottom: 56px;">
         <div class="label" style="margin-bottom: 16px;">How We Engage</div>
         <h2 class="section-heading" style="max-width: 480px; margin: 0 auto 16px;">
@@ -578,11 +632,11 @@
     </div>
   </section>
 
-  <div class="container"><div class="divider"></div></div>
-
   <!-- ENGAGEMENT MODEL -->
-  <section style="padding: 96px 0;">
-    <div class="container" style="max-width: 720px;">
+  <section style="padding: 96px 0; position: relative; overflow: hidden;">
+    <div class="section-glow" style="width:500px;height:500px;background:radial-gradient(circle,rgba(124,92,230,0.06) 0%,transparent 65%);top:50%;right:-150px;transform:translateY(-50%);"></div>
+    <div class="section-glow" style="width:400px;height:400px;background:radial-gradient(circle,rgba(56,196,240,0.05) 0%,transparent 65%);top:50%;left:-100px;transform:translateY(-50%);"></div>
+    <div class="container" style="max-width: 720px; position: relative; z-index: 1;">
       <div style="text-align: center; margin-bottom: 40px;">
         <div class="label" style="margin-bottom: 16px;">How We Work Together</div>
         <h2 class="section-heading" style="margin-bottom: 16px;">
@@ -608,11 +662,9 @@
     </div>
   </section>
 
-  <div class="container"><div class="divider"></div></div>
-
   <!-- FAQ -->
-  <section style="padding: 96px 0;">
-    <div class="container" style="max-width: 720px;">
+  <section class="section-elevated" style="padding: 96px 0;">
+    <div class="container" style="max-width: 720px; position: relative; z-index: 1;">
       <div style="text-align: center; margin-bottom: 48px;">
         <div class="label" style="margin-bottom: 16px;">FAQ</div>
         <h2 class="section-heading">Common questions.</h2>
@@ -640,21 +692,35 @@
   </section>
 
   <!-- FINAL CTA -->
-  <section style="padding: 120px 0; position: relative; overflow: hidden;">
-    <div class="cta-glow"></div>
-    <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, rgba(56,196,240,0.03), transparent); pointer-events: none;"></div>
+  <section style="padding: 140px 0; position: relative; overflow: hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 90% 100% at 50% 50%, rgba(56,196,240,0.08) 0%, rgba(124,92,230,0.05) 40%, transparent 70%);pointer-events:none;"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%, rgba(56,196,240,0.04) 0%, transparent 60%);pointer-events:none;"></div>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;border:1px solid rgba(56,196,240,0.07);pointer-events:none;"></div>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;border-radius:50%;border:1px solid rgba(56,196,240,0.04);pointer-events:none;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,var(--accent-blue) 30%,var(--accent-violet) 70%,transparent 100%);opacity:0.3;"></div>
     <div class="container" style="position: relative; z-index: 1; text-align: center;">
       <div class="label" style="margin-bottom: 20px;">Let's Talk</div>
       <h2 class="display" style="max-width: 580px; margin: 0 auto 20px;">
         Ready to bring AI<br /><span class="gradient-text">into your business?</span>
       </h2>
-      <p class="body-text" style="max-width: 440px; margin: 0 auto 40px; font-size: 17px;">
+      <p class="body-text" style="max-width: 440px; margin: 0 auto 48px; font-size: 17px;">
         Book a free 30-minute strategy call. We'll audit your business and show you exactly where AI can make the biggest difference.
       </p>
-      <a href="https://calendly.com/nicholaswatkins222/30min" class="btn-primary" style="font-size: 16px; padding: 18px 40px;">Book a Free Call →</a>
-      <p style="margin-top: 16px; font-size: 12px; color: var(--text-muted); font-family: 'Inter', sans-serif;">
-        30 minutes · No obligation · Strategy first
-      </p>
+      <a href="https://calendly.com/nicholaswatkins222/30min" class="btn-primary" style="font-size: 16px; padding: 18px 44px;">Book a Free Call →</a>
+      <div style="display: flex; gap: 24px; justify-content: center; margin-top: 28px; flex-wrap: wrap;">
+        <div style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38C4F0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.6;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          30 minutes
+        </div>
+        <div style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38C4F0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.6;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          No obligation
+        </div>
+        <div style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7C5CE6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.6;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Strategy first
+        </div>
+      </div>
     </div>
   </section>
 
@@ -662,7 +728,7 @@
   <footer style="border-top: 1px solid var(--border); padding: 40px 0;">
     <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
       <a href="index.html" class="logo" style="font-size: 16px;">
-        NEURAIVE<span class="logo-x-wrap"><span class="logo-x">X</span><span class="logo-node" style="width:4px; height:4px; top:2px; right:-6px;"></span><span class="logo-arm" style="top:4px; right:-15px; width:10px;"></span></span>
+        NEURAIVE<svg width="16" height="13" viewBox="0 0 22 19" fill="none" style="flex-shrink:0;"><line x1="2" y1="1.5" x2="20" y2="17.5" stroke="url(#lxg)" stroke-width="2.2" stroke-linecap="round"/><line x1="20" y1="1.5" x2="2" y2="17.5" stroke="url(#lxg)" stroke-width="2.2" stroke-linecap="round"/><circle cx="2" cy="1.5" r="2" fill="#38C4F0"/><circle cx="20" cy="1.5" r="2" fill="#7C5CE6"/><circle cx="2" cy="17.5" r="2" fill="#7C5CE6"/><circle cx="20" cy="17.5" r="2" fill="#38C4F0"/><circle cx="11" cy="9.5" r="2.8" fill="var(--bg-base)" stroke="url(#lxg)" stroke-width="1.5"/><circle cx="11" cy="9.5" r="1.2" fill="#38C4F0"/></svg>
       </a>
       <p style="font-size: 12px; color: var(--text-muted); font-family: 'Inter', sans-serif;">
         © 2025 Neuraivex. All rights reserved.

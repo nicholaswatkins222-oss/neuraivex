@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Services — Neuraivex</title>
-  <meta name="description" content="The full outbound stack — lead sourcing, AI-personalized outreach, and pipeline automation. Built for you, run by AI." />
+  <meta name="description" content="SEO-optimized websites, AI workflow automation, and B2B lead generation systems — each scoped to your business and built to produce outcomes." />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -330,6 +330,42 @@
       color: var(--text-secondary);
     }
 
+    /* ── FAQ ACCORDION ── */
+    .faq-q {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      user-select: none;
+    }
+    .faq-toggle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(56,196,240,0.08);
+      border: 1px solid rgba(56,196,240,0.2);
+      color: var(--accent-blue);
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 300ms cubic-bezier(0.34,1.56,0.64,1), background 200ms ease;
+    }
+    .faq-q:hover .faq-toggle { background: rgba(56,196,240,0.18); }
+    .faq-item.open .faq-toggle { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 380ms cubic-bezier(0.34,1.1,0.64,1), padding-top 300ms ease;
+      padding-top: 0;
+    }
+    .faq-item.open .faq-a {
+      max-height: 160px;
+      padding-top: 10px;
+    }
+
     /* RESPONSIVE */
     @media (max-width: 768px) {
       nav { padding: 0 20px; }
@@ -368,10 +404,10 @@
         <div class="pill"><span class="pill-dot"></span>What We Build</div>
       </div>
       <h1 class="display" style="max-width: 720px; margin: 0 auto 20px;">
-        The full outbound stack.<br /><span class="gradient-text">Built for you. Run by AI.</span>
+        Three services.<br /><span class="gradient-text">One mission: grow your business with AI.</span>
       </h1>
       <p class="body-text" style="max-width: 480px; margin: 0 auto; font-size: 17px;">
-        Three integrated systems that take you from a list of target industries to meetings on your calendar — without lifting a finger.
+        Whether you need a website that ranks, operations that run themselves, or a pipeline full of qualified leads — we build it, run it, and own the outcome.
       </p>
     </div>
   </section>
@@ -387,28 +423,28 @@
             <div style="flex: 1; padding-right: 40px; border-right: 1px solid var(--border);">
               <div class="icon-wrap" style="margin-bottom: 20px;">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38C4F0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                  <line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
                 </svg>
               </div>
               <div class="label" style="margin-bottom: 10px;">01</div>
-              <div class="card-heading" style="margin-bottom: 14px;">Lead Sourcing &amp; Enrichment</div>
+              <div class="card-heading" style="margin-bottom: 14px;">SEO-Optimized Websites</div>
               <p class="body-text" style="font-size: 15px;">
-                We build verified, hyper-targeted prospect lists from scratch — matched to your exact ideal client profile. No purchased lists, no guesswork. Every contact is validated before it enters the system.
+                Your website is your best closer — if it ranks and converts. Most business sites look fine but show up nowhere in search and turn away the traffic they do get.
               </p>
               <p class="body-text" style="font-size: 15px; margin-top: 12px;">
-                Lists are refreshed weekly to ensure deliverability stays high and targeting stays sharp as your ICP evolves.
+                We build differently. Every site starts with keyword research and conversion intent. The structure, copy, and design are all engineered to rank in search and move visitors toward action.
               </p>
             </div>
             <div style="flex: 1; padding-left: 40px; display: flex; flex-direction: column; justify-content: center;">
               <div class="label" style="margin-bottom: 16px;">What's included</div>
               <ul class="bullet-list">
-                <li>ICP-matched prospect identification</li>
-                <li>Verified business email addresses</li>
-                <li>LinkedIn + company data enrichment</li>
-                <li>Industry, headcount, and revenue filtering</li>
-                <li>Weekly list refresh and hygiene</li>
-                <li>Suppression list management</li>
+                <li>Target keyword research and content strategy</li>
+                <li>On-page SEO (titles, meta, headings, schema)</li>
+                <li>Conversion-optimized page layouts</li>
+                <li>Fast load times and mobile-first design</li>
+                <li>Contact forms and call-to-action architecture</li>
+                <li>Google Analytics and Search Console setup</li>
+                <li>Post-launch indexing and sitemap submission</li>
               </ul>
             </div>
           </div>
@@ -420,27 +456,27 @@
             <div style="flex: 1; padding-right: 40px; border-right: 1px solid var(--border);">
               <div class="icon-wrap" style="margin-bottom: 20px; background: rgba(124,92,230,0.1); border-color: rgba(124,92,230,0.2);">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7C5CE6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11a19.79 19.79 0 01-3-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
                 </svg>
               </div>
               <div class="label" style="margin-bottom: 10px;">02</div>
-              <div class="card-heading" style="margin-bottom: 14px;">AI-Personalized Outreach</div>
+              <div class="card-heading" style="margin-bottom: 14px;">AI Workflows</div>
               <p class="body-text" style="font-size: 15px;">
-                Every email is written to feel personal — because the logic behind it is. We use contextual signals from each prospect's company, role, and recent activity to generate first lines that don't read like templates.
+                Most businesses have the same problem: too much manual work. Tasks that get repeated daily, handoffs that rely on someone remembering, and processes that break when one person is unavailable.
               </p>
               <p class="body-text" style="font-size: 15px; margin-top: 12px;">
-                Multi-step sequences handle timing and follow-ups automatically. Reply detection routes interested leads straight to your booking link.
+                We audit your operations, map the bottlenecks, and build AI automations to eliminate them — integrated directly into the tools your team already uses.
               </p>
             </div>
             <div style="flex: 1; padding-left: 40px; display: flex; flex-direction: column; justify-content: center;">
               <div class="label" style="margin-bottom: 16px;">What's included</div>
               <ul class="bullet-list">
-                <li>Multi-step email sequences (3–5 touches)</li>
-                <li>AI-written first lines using prospect-specific signals</li>
-                <li>Subject line A/B testing</li>
-                <li>Send-time optimization</li>
-                <li>Automated reply detection and routing</li>
-                <li>Bounce and unsubscribe handling</li>
+                <li>Operations audit to identify automation opportunities</li>
+                <li>Custom workflow builds (n8n, Make, Zapier, or direct API)</li>
+                <li>Tool integrations (CRM, email, Slack, Sheets, and more)</li>
+                <li>Error handling and monitoring</li>
+                <li>Full documentation and handover</li>
+                <li>Ongoing optimization and iteration</li>
               </ul>
             </div>
           </div>
@@ -452,30 +488,28 @@
             <div style="flex: 1; padding-right: 40px; border-right: 1px solid var(--border);">
               <div class="icon-wrap" style="margin-bottom: 20px;">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38C4F0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                  <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
-                  <line x1="3" y1="10" x2="21" y2="10"/>
-                  <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
+                  <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
                 </svg>
               </div>
               <div class="label" style="margin-bottom: 10px;">03</div>
-              <div class="card-heading" style="margin-bottom: 14px;">Pipeline &amp; Follow-Up Automation</div>
+              <div class="card-heading" style="margin-bottom: 14px;">Lead Generation &amp; Optimization</div>
               <p class="body-text" style="font-size: 15px;">
-                Once a lead shows interest, the system handles everything after. Follow-up sequences, CRM sync, and booking link delivery all run automatically — so no lead goes cold because someone forgot to follow up.
+                B2B growth starts with the right conversations. We build cold email systems that find your ideal clients, reach out with AI-personalized messaging, and handle follow-ups automatically.
               </p>
               <p class="body-text" style="font-size: 15px; margin-top: 12px;">
-                Monthly reporting gives you a clear view of what's working — volume, reply rates, booking rates — so we can continuously optimize targeting and messaging.
+                Then we optimize every step — targeting, messaging, timing — until the pipeline is producing consistent, qualified meetings at the highest possible conversion rate.
               </p>
             </div>
             <div style="flex: 1; padding-left: 40px; display: flex; flex-direction: column; justify-content: center;">
               <div class="label" style="margin-bottom: 16px;">What's included</div>
               <ul class="bullet-list">
-                <li>Automated follow-up cadences post-reply</li>
-                <li>CRM integration (HubSpot, Airtable, Notion, or Google Sheets)</li>
-                <li>Booking link injection on positive replies</li>
-                <li>Lead status tracking and pipeline visibility</li>
-                <li>Monthly performance reports</li>
-                <li>Ongoing targeting and copy optimization</li>
+                <li>ICP-matched prospect list building</li>
+                <li>Verified business email sourcing</li>
+                <li>AI-personalized cold email sequences</li>
+                <li>Automated follow-up and reply handling</li>
+                <li>Booking link delivery on positive replies</li>
+                <li>Pipeline tracking and conversion reporting</li>
+                <li>Continuous optimization of targeting and messaging</li>
               </ul>
             </div>
           </div>
@@ -491,12 +525,12 @@
   <section style="padding: 96px 0;">
     <div class="container">
       <div style="text-align: center; margin-bottom: 56px;">
-        <div class="label" style="margin-bottom: 16px;">How It Chains Together</div>
+        <div class="label" style="margin-bottom: 16px;">How We Engage</div>
         <h2 class="section-heading" style="max-width: 480px; margin: 0 auto 16px;">
-          Three systems. <span class="gradient-text">One pipeline.</span>
+          Audit first. <span class="gradient-text">Build what fits.</span>
         </h2>
         <p class="body-text" style="max-width: 420px; margin: 0 auto;">
-          Each service feeds directly into the next. Nothing falls through the cracks.
+          Every engagement starts with a free audit. We find where AI can move the needle, then build accordingly.
         </p>
       </div>
 
@@ -516,30 +550,28 @@
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
           </div>
-          <div class="card-heading" style="font-size: 17px; margin-bottom: 8px;">Lead Sourcing</div>
-          <p class="body-text" style="font-size: 13px;">Verified prospects matched to your ICP enter the system daily.</p>
+          <div class="card-heading" style="font-size: 17px; margin-bottom: 8px;">Audit</div>
+          <p class="body-text" style="font-size: 13px;">We map your site, ops, and pipeline. You'll know exactly where the gaps are and what to fix first.</p>
         </div>
 
         <div style="text-align: center; padding: 32px 32px 32px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
           <div style="width: 80px; height: 80px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 4px 20px rgba(56,196,240,0.2);">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11a19.79 19.79 0 01-3-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
             </svg>
           </div>
-          <div class="card-heading" style="font-size: 17px; margin-bottom: 8px;">AI Outreach</div>
-          <p class="body-text" style="font-size: 13px;">Personalized sequences go out automatically. Replies are detected and routed.</p>
+          <div class="card-heading" style="font-size: 17px; margin-bottom: 8px;">Build</div>
+          <p class="body-text" style="font-size: 13px;">We deploy the right system — website, workflow automations, or lead engine — scoped to your needs.</p>
         </div>
 
         <div style="text-align: center; padding: 32px 32px 32px;">
           <div style="width: 80px; height: 80px; border-radius: 50%; background: rgba(124,92,230,0.08); border: 1px solid rgba(124,92,230,0.25); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C5CE6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-              <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
-              <line x1="3" y1="10" x2="21" y2="10"/>
+              <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
             </svg>
           </div>
-          <div class="card-heading" style="font-size: 17px; margin-bottom: 8px;">Booked Meetings</div>
-          <p class="body-text" style="font-size: 13px;">Interested leads get your booking link. Meetings land in your calendar.</p>
+          <div class="card-heading" style="font-size: 17px; margin-bottom: 8px;">Results</div>
+          <p class="body-text" style="font-size: 13px;">The systems run. You rank higher, recover time, and close more business — without the manual overhead.</p>
         </div>
 
       </div>
@@ -554,19 +586,19 @@
       <div style="text-align: center; margin-bottom: 40px;">
         <div class="label" style="margin-bottom: 16px;">How We Work Together</div>
         <h2 class="section-heading" style="margin-bottom: 16px;">
-          One system. <span class="gradient-text">One engagement.</span>
+          Scoped to your needs. <span class="gradient-text">Fully managed.</span>
         </h2>
       </div>
 
       <div class="card" style="text-align: center; padding: 48px;">
         <p class="body-text" style="font-size: 16px; margin-bottom: 16px;">
-          We don't sell individual services à la carte. We build the full pipeline as a single, integrated system — because disconnected parts don't produce consistent results.
+          We don't force a bundle. Every engagement is scoped based on what your business actually needs — whether that's one service or all three working together.
         </p>
         <p class="body-text" style="font-size: 16px; margin-bottom: 16px;">
-          Engagements are done-for-you and fully managed. We source, we build, we run it. You take the calls we book.
+          We start with a free audit call, identify where AI can make the biggest impact, and build from there. Everything is done-for-you and fully managed. You review what we deliver and focus on running your business.
         </p>
         <p class="body-text" style="font-size: 15px; color: var(--text-muted);">
-          Pricing is scoped per engagement based on your market size, outreach volume, and target timeline. We discuss this on the call.
+          Pricing is scoped per engagement based on your needs, market size, and target timeline. We discuss this on the call.
         </p>
 
         <div style="margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border);">
@@ -588,20 +620,20 @@
 
       <div>
         <div class="faq-item">
+          <div class="faq-q">How do you decide which service I need?</div>
+          <div class="faq-a">We start with a free audit call where we review your current setup — your site, your ops, your pipeline. From there we tell you exactly where AI can move the needle and what we'd recommend building first.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can I get just one service?</div>
+          <div class="faq-a">Yes. We scope each engagement based on your specific situation. If you need a website, we build that. If you need workflow automation, we audit and build that. You're not locked into a bundle.</div>
+        </div>
+        <div class="faq-item">
           <div class="faq-q">How long does setup take?</div>
-          <div class="faq-a">7–10 business days from the discovery call. We map your ICP, build the lead list, write the sequences, and get everything wired and tested before we go live.</div>
+          <div class="faq-a">It depends on the service. Websites typically take 2–3 weeks. Workflow automations take 1–2 weeks depending on complexity. Lead generation systems go live within 7–10 business days.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-q">Do I need to provide a lead list?</div>
-          <div class="faq-a">No. Lead sourcing is part of the system. We build and maintain the list based on your ICP — you don't need to supply anything except clarity on who you want to reach.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">Which CRMs do you support?</div>
-          <div class="faq-a">We work with most common options — HubSpot, Airtable, Notion, and Google Sheets. If you're using something else, let us know on the call and we'll confirm compatibility.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">What if I don't see results?</div>
-          <div class="faq-a">We rework the targeting and messaging until it converts. Cold outreach performance is heavily dependent on ICP fit and copy quality — both of which we control and optimize continuously.</div>
+          <div class="faq-q">Do I need to be technical?</div>
+          <div class="faq-a">Not at all. We handle everything — strategy, build, and management. Your job is to tell us your goals and approve what we deliver. No technical knowledge required.</div>
         </div>
       </div>
     </div>
@@ -614,10 +646,10 @@
     <div class="container" style="position: relative; z-index: 1; text-align: center;">
       <div class="label" style="margin-bottom: 20px;">Let's Talk</div>
       <h2 class="display" style="max-width: 580px; margin: 0 auto 20px;">
-        Ready to stop doing it <span class="gradient-text">manually?</span>
+        Ready to bring AI<br /><span class="gradient-text">into your business?</span>
       </h2>
       <p class="body-text" style="max-width: 440px; margin: 0 auto 40px; font-size: 17px;">
-        Book a free 30-minute strategy call. No pitch, no pressure — just a clear plan for automating your outreach.
+        Book a free 30-minute strategy call. We'll audit your business and show you exactly where AI can make the biggest difference.
       </p>
       <a href="https://calendly.com/nicholaswatkins222/30min" class="btn-primary" style="font-size: 16px; padding: 18px 40px;">Book a Free Call →</a>
       <p style="margin-top: 16px; font-size: 12px; color: var(--text-muted); font-family: 'Inter', sans-serif;">
@@ -686,6 +718,22 @@
       .gradient-text{background:linear-gradient(135deg,#38C4F0,#7C5CE6,#38C4F0,#7C5CE6);background-size:300% 300%;animation:grad-shift 6s ease infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
     `;
     document.head.appendChild(gradStyle);
+
+    /* ── FAQ ACCORDION ── */
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const q = item.querySelector('.faq-q');
+      const toggle = document.createElement('span');
+      toggle.className = 'faq-toggle';
+      toggle.textContent = '+';
+      toggle.setAttribute('aria-hidden', 'true');
+      q.appendChild(toggle);
+
+      q.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
   </script>
 
 </body>

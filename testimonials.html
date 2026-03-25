@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Results — Neuraivex</title>
+  <meta name="description" content="Real clients, real results. See the websites and automations Neuraivex has built — and what clients had to say." />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg-base:        #060D1F;
+      --bg-surface:     #0D1530;
+      --bg-elevated:    #1A2545;
+      --border:         #243058;
+      --text-primary:   #FFFFFF;
+      --text-secondary: #8A9BC0;
+      --text-muted:     #4A5878;
+      --accent-blue:    #38C4F0;
+      --accent-violet:  #7C5CE6;
+      --gradient:       linear-gradient(135deg, #38C4F0, #7C5CE6);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── GRAIN TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 128px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── CURSOR GLOW ── */
+    .cursor-glow {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56,196,240,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      transition: left 0.12s ease, top 0.12s ease;
+    }
+
+    /* ── TYPOGRAPHY ── */
+    h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
+
+    .display {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+    }
+
+    .section-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+    }
+
+    .card-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+
+    .label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+    }
+
+    .body-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    /* ── GRADIENT TEXT ── */
+    .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── LOGO ── */
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    .logo-x-wrap { position: relative; display: inline-block; }
+    .logo-x {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .logo-node {
+      position: absolute;
+      top: 3px;
+      right: -7px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+      box-shadow: 0 0 6px var(--accent-blue);
+    }
+    .logo-arm {
+      position: absolute;
+      top: 5px;
+      right: -17px;
+      width: 12px;
+      height: 1.5px;
+      background: linear-gradient(90deg, var(--accent-blue), transparent);
+    }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 14px 28px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: var(--gradient);
+      color: #fff;
+      box-shadow: 0 4px 24px rgba(56,196,240,0.25), 0 1px 4px rgba(0,0,0,0.4);
+      transition: transform 200ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 200ms ease;
+      display: inline-block;
+      text-decoration: none;
+      position: relative;
+      z-index: 1;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 32px rgba(56,196,240,0.35), 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .btn-primary:active { transform: translateY(0) scale(0.99); }
+
+    .btn-secondary {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      padding: 13px 27px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-primary);
+      transition: border-color 200ms ease, background 200ms ease, color 200ms ease;
+      display: inline-block;
+      text-decoration: none;
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent-blue);
+      background: rgba(56,196,240,0.06);
+      color: #fff;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(6,13,31,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(36,48,88,0.6);
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-link {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 200ms ease;
+    }
+    .nav-link:hover { color: var(--text-primary); }
+    .nav-link.active { color: var(--accent-blue); }
+
+    /* ── LAYOUT ── */
+    section { position: relative; z-index: 1; }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.04) inset;
+      transition: border-color 250ms ease, transform 250ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 250ms ease;
+    }
+    .card:hover {
+      border-color: rgba(56,196,240,0.25);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(56,196,240,0.1), 0 1px 0 rgba(255,255,255,0.06) inset;
+    }
+    .card-accent {
+      position: relative;
+      overflow: hidden;
+    }
+    .card-accent::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 20px;
+      right: 20px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-blue), var(--accent-violet), transparent);
+      opacity: 0.6;
+    }
+
+    /* ── PILL BADGE ── */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: rgba(56,196,240,0.08);
+      border: 1px solid rgba(56,196,240,0.2);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent-blue);
+      letter-spacing: 0.02em;
+    }
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+      box-shadow: 0 0 6px var(--accent-blue);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* ── HERO ELEMENTS ── */
+    .hero-glow-blue {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56,196,240,0.12) 0%, transparent 70%);
+      top: -200px;
+      left: 50%;
+      transform: translateX(-30%);
+      pointer-events: none;
+      filter: blur(1px);
+    }
+    .hero-glow-violet {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,92,230,0.1) 0%, transparent 70%);
+      top: -100px;
+      right: 0;
+      transform: translateX(30%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(36,48,88,0.4) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(36,48,88,0.4) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* ── SECTION GLOWS ── */
+    .section-glow {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .dot-grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(56,196,240,0.12) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 0%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .glow-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(56,196,240,0.3) 30%, rgba(124,92,230,0.3) 70%, transparent 100%);
+      width: 100%;
+    }
+
+    /* ── BROWSER MOCKUP ── */
+    .browser-frame {
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.06) inset;
+    }
+    .browser-chrome {
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .browser-dots {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .browser-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .browser-dot.red    { background: #FF5F57; }
+    .browser-dot.yellow { background: #FEBC2E; }
+    .browser-dot.green  { background: #28C840; }
+    .browser-url-bar {
+      flex: 1;
+      background: rgba(6,13,31,0.6);
+      border: 1px solid rgba(36,48,88,0.8);
+      border-radius: 6px;
+      padding: 4px 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow: hidden;
+    }
+    .browser-url-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .browser-viewport {
+      background: var(--bg-surface);
+      height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+    .browser-viewport img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+    .browser-placeholder {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--bg-elevated) 0%, rgba(13,21,48,0.8) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .browser-placeholder-initials {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0.25;
+    }
+    .browser-placeholder-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    /* Grid overlay inside viewport */
+    .browser-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(36,48,88,0.25) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(36,48,88,0.25) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    /* ── CASE STUDY CARDS ── */
+    .case-study-card {
+      padding: 40px;
+      margin-bottom: 28px;
+    }
+    .case-study-inner {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    /* Build pills (static, no dot) */
+    .build-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .build-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 12px;
+      border-radius: 100px;
+      background: rgba(56,196,240,0.06);
+      border: 1px solid rgba(56,196,240,0.16);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* Quote block */
+    .quote-block {
+      margin-top: 28px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+    .quote-mark {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 0.6;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0.35;
+      display: block;
+      margin-bottom: 12px;
+      user-select: none;
+    }
+    .quote-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+    .quote-attribution {
+      margin-top: 16px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+
+    /* Placeholder / coming soon card */
+    .case-study-card.coming-soon {
+      opacity: 0.55;
+      border-style: dashed;
+      border-color: rgba(36,48,88,0.8);
+    }
+    .case-study-card.coming-soon:hover {
+      transform: none;
+      border-color: rgba(56,196,240,0.15);
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--bg-surface);
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    }
+    .stat-item {
+      flex: 1;
+      text-align: center;
+      padding: 40px 24px;
+    }
+    .stat-item:not(:last-child) {
+      border-right: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ── CARD REVEAL ANIMATION ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .case-study-inner {
+        grid-template-columns: 1fr;
+      }
+      .case-study-card { padding: 28px; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .container { padding: 0 20px; }
+      .nav-links { display: none; }
+      .card { padding: 24px; }
+      .stats-bar { flex-direction: column; }
+      .stat-item:not(:last-child) { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+    @media (max-width: 480px) {
+      .browser-viewport { height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="index.html" class="logo">
+      NEURAIVE<span class="logo-x-wrap"><span class="logo-x">X</span><span class="logo-node"></span><span class="logo-arm"></span></span>
+    </a>
+    <div class="nav-links">
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="index.html#how-it-works" class="nav-link">How It Works</a>
+      <a href="index.html#why-us" class="nav-link">Why Neuraivex</a>
+      <a href="testimonials.html" class="nav-link active">Results</a>
+    </div>
+    <a href="https://calendly.com/nicholaswatkins222/30min" class="btn-primary" style="font-size:13px; padding:10px 20px;">Book a Free Call</a>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section style="padding-top: 140px; padding-bottom: 80px; overflow: hidden; position: relative;">
+    <div class="hero-glow-blue"></div>
+    <div class="hero-glow-violet"></div>
+    <div class="hero-grid"></div>
+
+    <div class="container" style="position: relative; z-index: 2; text-align: center;">
+      <div style="margin-bottom: 24px; display: flex; justify-content: center;">
+        <div class="pill"><span class="pill-dot"></span>Social Proof</div>
+      </div>
+      <h1 class="display" style="max-width: 700px; margin: 0 auto 20px;">
+        Real Clients.<br /><span class="gradient-text">Real Results.</span>
+      </h1>
+      <p class="body-text" style="max-width: 520px; margin: 0 auto; font-size: 17px;">
+        Every website and automation we've built is live, delivered on time, and backed by client feedback.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── GLOW DIVIDER ── -->
+  <div class="glow-divider"></div>
+
+  <!-- ── CASE STUDIES ── -->
+  <section style="padding: 80px 0 40px; position: relative;">
+    <div class="section-glow" style="width:700px;height:700px;background:radial-gradient(circle,rgba(56,196,240,0.04) 0%,transparent 65%);top:-100px;left:50%;transform:translateX(-50%);"></div>
+
+    <div class="container" style="position: relative; z-index: 1;">
+
+      <!-- ── CLIENT 1: BEYOND THE TRAIL ── -->
+      <div class="card card-accent case-study-card reveal" style="margin-bottom: 28px;">
+        <div class="case-study-inner">
+
+          <!-- Browser Mockup -->
+          <div>
+            <div class="browser-frame">
+              <div class="browser-chrome">
+                <div class="browser-dots">
+                  <span class="browser-dot red"></span>
+                  <span class="browser-dot yellow"></span>
+                  <span class="browser-dot green"></span>
+                </div>
+                <div class="browser-url-bar">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4A5878" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  <span class="browser-url-text">beyondthetrailmedia.com</span>
+                </div>
+              </div>
+              <div class="browser-viewport">
+                <!-- Replace placeholder with: <img src="screenshots/beyond-the-trail.jpg" alt="Beyond the Trail website"> -->
+                <div class="browser-placeholder">
+                  <span class="browser-placeholder-initials">BTT</span>
+                  <span class="browser-placeholder-label">Screenshot coming soon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div>
+            <div class="label" style="margin-bottom: 10px;">Case Study 01</div>
+            <div class="card-heading" style="font-size: 22px; margin-bottom: 6px;">Beyond the Trail Media</div>
+            <p style="font-family:'Inter',sans-serif; font-size:13px; color:var(--text-muted); margin-bottom: 20px;">Real Estate Photography &nbsp;·&nbsp; Reno, NV</p>
+
+            <div class="label" style="margin-bottom: 10px;">What We Built</div>
+            <div class="build-pills">
+              <span class="build-pill">Custom Website</span>
+              <span class="build-pill">Calendly Integration</span>
+              <span class="build-pill">Photography Portfolio</span>
+              <span class="build-pill">SEO Foundation</span>
+            </div>
+
+            <div class="quote-block">
+              <span class="quote-mark">"</span>
+              <p class="quote-text">
+                Working with Neuraivex was a game changer. They built exactly what I needed — a clean, professional site that actually gets me bookings. The whole process was smooth and fast.
+              </p>
+              <p class="quote-attribution">— [Client Name], Owner · Beyond the Trail Media</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── CLIENT 2: ABSOLUTE DRAIN ── -->
+      <div class="card card-accent case-study-card reveal" style="margin-bottom: 28px;">
+        <div class="case-study-inner" style="direction: ltr;">
+
+          <!-- Browser Mockup -->
+          <div>
+            <div class="browser-frame">
+              <div class="browser-chrome">
+                <div class="browser-dots">
+                  <span class="browser-dot red"></span>
+                  <span class="browser-dot yellow"></span>
+                  <span class="browser-dot green"></span>
+                </div>
+                <div class="browser-url-bar">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4A5878" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  <span class="browser-url-text">absolutedrainservice.com</span>
+                </div>
+              </div>
+              <div class="browser-viewport">
+                <!-- Replace placeholder with: <img src="screenshots/absolute-drain.jpg" alt="Absolute Drain Service website"> -->
+                <div class="browser-placeholder">
+                  <span class="browser-placeholder-initials">ADS</span>
+                  <span class="browser-placeholder-label">Screenshot coming soon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div>
+            <div class="label" style="margin-bottom: 10px;">Case Study 02</div>
+            <div class="card-heading" style="font-size: 22px; margin-bottom: 6px;">Absolute Drain Service</div>
+            <p style="font-family:'Inter',sans-serif; font-size:13px; color:var(--text-muted); margin-bottom: 20px;">Plumbing &amp; Drain Services &nbsp;·&nbsp; Reno, NV</p>
+
+            <div class="label" style="margin-bottom: 10px;">What We Built</div>
+            <div class="build-pills">
+              <span class="build-pill">Custom Website</span>
+              <span class="build-pill">Contact Form</span>
+              <span class="build-pill">n8n Automation</span>
+              <span class="build-pill">Telegram Alerts</span>
+            </div>
+
+            <div class="quote-block">
+              <span class="quote-mark">"</span>
+              <p class="quote-text">
+                I used to miss leads because I wasn't checking email. Now every form submission hits my phone instantly. The site looks great and the automation just works — I don't have to think about it.
+              </p>
+              <p class="quote-attribution">— [Client Name], Owner · Absolute Drain Service</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── CLIENT 3: COMING SOON ── -->
+      <div class="card case-study-card coming-soon reveal">
+        <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; padding: 32px 0; text-align: center;">
+          <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(56,196,240,0.06); border: 1px dashed rgba(56,196,240,0.2); display:flex; align-items:center; justify-content:center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38C4F0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          </div>
+          <div>
+            <div class="card-heading" style="font-size:16px; opacity:0.5; margin-bottom: 6px;">More Results Coming Soon</div>
+            <p class="body-text" style="font-size:13px; opacity:0.5;">New client case studies are added as projects ship.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── STATS BAR ── -->
+  <section style="padding: 60px 0 80px; position: relative; z-index: 1;">
+    <div class="container">
+      <div class="stats-bar reveal">
+        <div class="stat-item">
+          <div class="stat-num gradient-text">3</div>
+          <div class="stat-label">Clients Served</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num gradient-text">5+</div>
+          <div class="stat-label">Automations Built</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num gradient-text">100%</div>
+          <div class="stat-label">Delivered On Time</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BOOK A CALL ── -->
+  <section id="book" style="padding: 140px 0; position: relative; overflow: hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 90% 100% at 50% 50%, rgba(56,196,240,0.08) 0%, rgba(124,92,230,0.05) 40%, transparent 70%);pointer-events:none;"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%, rgba(56,196,240,0.04) 0%, transparent 60%);pointer-events:none;"></div>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;border:1px solid rgba(56,196,240,0.07);pointer-events:none;"></div>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;border-radius:50%;border:1px solid rgba(56,196,240,0.04);pointer-events:none;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,var(--accent-blue) 30%,var(--accent-violet) 70%,transparent 100%);opacity:0.3;"></div>
+
+    <div class="container" style="position: relative; z-index: 1; text-align: center;">
+      <div class="label" style="margin-bottom: 20px;">Let's Talk</div>
+      <h2 class="display" style="max-width: 640px; margin: 0 auto 20px;">
+        Ready to bring AI<br /><span class="gradient-text">into your business?</span>
+      </h2>
+      <p class="body-text" style="max-width: 480px; margin: 0 auto 48px; font-size: 17px;">
+        Book a free 30-minute strategy call. We'll audit your business and show you exactly where AI can make the biggest difference.
+      </p>
+      <a href="https://calendly.com/nicholaswatkins222/30min" class="btn-primary" style="font-size: 16px; padding: 18px 44px;">
+        Book a Free Call →
+      </a>
+      <div style="display: flex; gap: 24px; justify-content: center; margin-top: 28px; flex-wrap: wrap;">
+        <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--text-muted);letter-spacing:0.04em;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38C4F0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.6;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          30 minutes
+        </div>
+        <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--text-muted);letter-spacing:0.04em;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38C4F0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.6;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          No obligation
+        </div>
+        <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--text-muted);letter-spacing:0.04em;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7C5CE6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.6;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Strategy first
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer style="border-top: 1px solid var(--border); padding: 40px 0;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <a href="index.html" class="logo" style="font-size: 16px;">
+        NEURAIVE<span class="logo-x-wrap"><span class="logo-x">X</span><span class="logo-node"></span><span class="logo-arm"></span></span>
+      </a>
+      <p style="font-size: 12px; color: var(--text-muted); font-family: 'Inter', sans-serif;">
+        © 2025 Neuraivex. All rights reserved.
+      </p>
+      <a href="#book" class="btn-secondary" style="font-size: 12px; padding: 8px 18px;">Book a Call</a>
+    </div>
+  </footer>
+
+  <script>
+    // Cursor glow
+    const glow = document.getElementById('cursorGlow');
+    document.addEventListener('mousemove', e => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top  = e.clientY + 'px';
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

@@ -510,10 +510,61 @@
     }
 
     /* ── RESPONSIVE ── */
+    /* ── HAMBURGER BUTTON ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: all 200ms;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── MOBILE NAV DRAWER ── */
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      padding: 16px 20px 20px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      position: fixed;
+      top: 64px;
+      left: 0; right: 0;
+      z-index: 99;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav-link {
+      padding: 12px 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      border-bottom: 1px solid var(--border);
+      transition: color 150ms;
+    }
+    .mobile-nav-link:last-of-type { border-bottom: none; }
+    .mobile-nav-link:hover { color: var(--text-primary); }
+
     @media (max-width: 768px) {
       nav { padding: 0 20px; }
       .container { padding: 0 20px; }
       .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      nav > div:last-of-type { display: none; }
       .card { padding: 24px; }
       .grid-3 { grid-template-columns: 1fr !important; }
       .grid-2 { grid-template-columns: 1fr !important; }
@@ -624,7 +675,20 @@
       <a href="https://portal.neuraivex.com" target="_blank" class="nav-link" style="font-size:12px; color:var(--text-muted);">Client Login</a>
       <a href="#book" class="btn-primary" style="font-size:13px; padding:10px 20px;">Book a Free Call</a>
     </div>
+    <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- MOBILE NAV DRAWER -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="services.html" class="mobile-nav-link">Services</a>
+    <a href="#how-it-works" class="mobile-nav-link" onclick="toggleMobileNav()">How It Works</a>
+    <a href="#why-us" class="mobile-nav-link" onclick="toggleMobileNav()">Why Neuraivex</a>
+    <a href="testimonials.html" class="mobile-nav-link">Results</a>
+    <a href="https://portal.neuraivex.com" target="_blank" class="mobile-nav-link" style="color:var(--text-muted);">Client Login</a>
+    <a href="#book" class="btn-primary" style="margin-top:8px; text-align:center;" onclick="toggleMobileNav()">Book a Free Call</a>
+  </div>
 
   <!-- ── HERO ── -->
   <section style="padding-top: 160px; padding-bottom: 120px; overflow: hidden; position: relative;">
@@ -995,6 +1059,13 @@
       <a href="#book" class="btn-secondary" style="font-size: 12px; padding: 8px 18px;">Book a Call</a>
     </div>
   </footer>
+
+  <script>
+    function toggleMobileNav() {
+      document.getElementById('mobileNav').classList.toggle('open');
+      document.getElementById('navHamburger').classList.toggle('open');
+    }
+  </script>
 
   <script>
     // Smooth active state for nav links

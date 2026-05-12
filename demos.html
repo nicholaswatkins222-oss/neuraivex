@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo Websites — Neuraivex</title>
+  <link rel="icon" type="image/svg+xml" href="Brand_Logo/favicon.svg" />
+  <meta name="description" content="Twelve live demo websites across every style we build — from industrial trades to editorial photography. Click any card to walk through a real homepage." />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg-base:        #060D1F;
+      --bg-surface:     #0D1530;
+      --bg-elevated:    #1A2545;
+      --border:         #243058;
+      --text-primary:   #FFFFFF;
+      --text-secondary: #8A9BC0;
+      --text-muted:     #4A5878;
+      --accent-blue:    #38C4F0;
+      --accent-violet:  #7C5CE6;
+      --gradient:       linear-gradient(135deg, #38C4F0, #7C5CE6);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 128px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
+
+    .display {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(40px, 6vw, 64px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+    }
+
+    .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(6, 13, 31, 0.75);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .logo-x-wrap { position: relative; display: inline-block; }
+    .logo-x {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-link {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--text-primary); }
+    .nav-link.active { color: var(--text-primary); }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(124, 92, 230, 0.35);
+    }
+
+    .nav-hamburger {
+      display: none;
+      background: transparent;
+      border: none;
+      width: 32px;
+      height: 32px;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #fff;
+      border-radius: 1px;
+    }
+
+    .mobile-nav {
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: rgba(6, 13, 31, 0.97);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+      z-index: 99;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav-link {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 160px 48px 80px;
+      max-width: 1280px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(56, 196, 240, 0.06);
+      margin-bottom: 24px;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      margin-top: 24px;
+      line-height: 1.65;
+    }
+
+    /* ── GALLERY ── */
+    .gallery {
+      padding: 40px 48px 120px;
+      max-width: 1280px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-blue);
+      box-shadow: 0 16px 40px rgba(56, 196, 240, 0.12);
+    }
+
+    .card-img {
+      aspect-ratio: 16 / 10;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--bg-elevated);
+      position: relative;
+    }
+
+    .card-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(6,13,31,0.7) 100%);
+    }
+
+    .card-style-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(6, 13, 31, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 5px 11px;
+      border-radius: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      z-index: 2;
+      border: 1px solid var(--border);
+    }
+
+    .card-body {
+      padding: 22px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-business {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+
+    .card-tagline {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 18px;
+      flex: 1;
+    }
+
+    .card-link {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-link .arrow {
+      transition: transform 0.2s;
+    }
+    .card:hover .card-link .arrow {
+      transform: translateX(4px);
+    }
+
+    /* ── CLOSING CTA ── */
+    .closing {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 48px 120px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .closing h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      margin-bottom: 16px;
+    }
+
+    .closing p {
+      color: var(--text-secondary);
+      font-size: 17px;
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 1024px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      nav > div:last-of-type { display: none; }
+      .hero { padding: 120px 20px 60px; }
+      .gallery { padding: 30px 20px 80px; }
+      .grid { grid-template-columns: 1fr; gap: 20px; }
+      .closing { padding: 60px 20px 80px; }
+      footer { padding: 30px 20px; flex-direction: column; gap: 14px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="index.html" class="logo">
+      NEURAIVE<span class="logo-x-wrap"><span class="logo-x">X</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="services.html" class="nav-link">Services</a>
+      <a href="demos.html" class="nav-link active">Demos</a>
+      <a href="index.html#how-it-works" class="nav-link">How It Works</a>
+      <a href="index.html#why-us" class="nav-link">Why Neuraivex</a>
+      <a href="testimonials.html" class="nav-link">Results</a>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <a href="https://portal.neuraivex.com" target="_blank" class="nav-link" style="font-size:12px; color:var(--text-muted);">Client Login</a>
+      <a href="https://calendly.com/nicholaswatkins222/15min" class="btn-primary" style="font-size:13px; padding:10px 20px;">Book a Free Call</a>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="services.html" class="mobile-nav-link">Services</a>
+    <a href="demos.html" class="mobile-nav-link">Demos</a>
+    <a href="index.html#how-it-works" class="mobile-nav-link">How It Works</a>
+    <a href="index.html#why-us" class="mobile-nav-link">Why Neuraivex</a>
+    <a href="testimonials.html" class="mobile-nav-link">Results</a>
+    <a href="https://portal.neuraivex.com" target="_blank" class="mobile-nav-link" style="color:var(--text-muted);">Client Login</a>
+    <a href="https://calendly.com/nicholaswatkins222/15min" class="btn-primary" style="margin-top:8px; text-align:center;">Book a Free Call</a>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <span class="hero-eyebrow label">Live Demos · 12 styles</span>
+    <h1 class="display">
+      See your site, <span class="gradient-text">before we build it.</span>
+    </h1>
+    <p class="hero-sub">
+      Twelve full homepages across every visual style we ship — industrial trades, B2B wholesale, SaaS, editorial, photography, and more. Click any card to walk through a live demo. Each one is a real site you can scroll, not a screenshot.
+    </p>
+  </section>
+
+  <!-- ── GALLERY ── -->
+  <section class="gallery">
+    <div class="grid">
+
+      <!-- 1. Iron & Grit -->
+      <a href="demos/iron-grit.html" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=80&auto=format&fit=crop');">
+          <span class="card-style-tag">Iron &amp; Grit</span>
+        </div>
+        <div class="card-body">
+          <div class="card-business">Halcyon Roofing &amp; Exteriors</div>
+          <p class="card-tagline">Commercial roofing in Denver — heavy condensed type, safety-orange accents, before/after proof.</p>
+          <span class="card-link">View demo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <!-- 2. Proof Machine -->
+      <a href="demos/proof-machine.html" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1605641532883-fdca7f12c1a4?w=900&q=80&auto=format&fit=crop');">
+          <span class="card-style-tag">Proof Machine</span>
+        </div>
+        <div class="card-body">
+          <div class="card-business">Cascade Auto Detailing</div>
+          <p class="card-tagline">Portland mobile detailing built on 800+ five-star reviews — Lora serif, navy accent, sticky review badge.</p>
+          <span class="card-link">View demo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <!-- 3. Glass Ledger -->
+      <a href="demos/glass-ledger.html" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=900&q=80&auto=format&fit=crop');">
+          <span class="card-style-tag">Glass Ledger</span>
+        </div>
+        <div class="card-body">
+          <div class="card-business">Northbridge Packaging Supply</div>
+          <p class="card-tagline">B2B wholesale poly mailers — pure white, hairline grid, MOQ + lead-time front and center.</p>
+          <span class="card-link">View demo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <!-- 4. Dark Signal -->
+      <a href="demos/dark-signal.html" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80&auto=format&fit=crop');">
+          <span class="card-style-tag">Dark Signal</span>
+        </div>
+        <div class="card-body">
+          <div class="card-business">Inflect AI</div>
+          <p class="card-tagline">A cold-outreach AI agency, faceless brand — near-black canvas, electric accent, animated counters.</p>
+          <span class="card-link">View demo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <!-- 5. Light Room -->
+      <a href="demos/light-room.html" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=80&auto=format&fit=crop');">
+          <span class="card-style-tag">Light Room</span>
+        </div>
+        <div class="card-body">
+          <div class="card-business">Liora Studios</div>
+          <p class="card-tagline">Real estate photographer — pure white canvas, the work carries 80% of the visual weight.</p>
+          <span class="card-link">View demo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <!-- 6. Field Report -->
+      <a href="demos/field-report.html" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1455390582262-044cdead277a?w=900&q=80&auto=format&fit=crop');">
+          <span class="card-style-tag">Field Report</span>
+        </div>
+        <div class="card-body">
+          <div class="card-business">The Quartermast</div>
+          <p class="card-tagline">A strategy consultancy that writes — newsprint editorial grid, slab-serif headlines, ink-style photography.</p>
+          <span class="card-link">View demo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <!-- 7. Neon Operator -->
+      <a href="demos/neon-operator.html" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=900&q=80&auto=format&fit=crop');">
+          <span class="card-style-tag">Neon Operator</span>
+        </div>
+        <div class="card-body">
+          <div class="card-business">FastLane Junk Removal</div>
+          <p class="card-tagline">Same-day haul in Phoenix — hot-coral accent, urgency strip mid-page, every section ends in a button.</p>
+          <span class="card-link">View demo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <!-- 8. Quiet Luxury -->
+      <a href="demos/quiet-luxury.html" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1556228720-195a672e8a03?w=900&q=80&auto=format&fit=crop');">
+          <span class="card-style-tag">Quiet Luxury</span>
+        </div>
+        <div class="card-body">
+          <div class="card-business">Atelier Voss</div>
+          <p class="card-tagline">Bespoke joinery and millwork — bone canvas, full-bleed image per section, restraint as the design.</p>
+          <span class="card-link">View demo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <!-- 9. Blueprint Grid -->
+      <a href="demos/blueprint-grid.html" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=900&q=80&auto=format&fit=crop');">
+          <span class="card-style-tag">Blueprint Grid</span>
+        </div>
+        <div class="card-body">
+          <div class="card-business">Meridian Engineering</div>
+          <p class="card-tagline">Chicago structural engineering — IBM Plex Mono, visible baseline grid, spec callout boxes.</p>
+          <span class="card-link">View demo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <!-- 10. Terrain -->
+      <a href="demos/terrain.html" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&q=80&auto=format&fit=crop');">
+          <span class="card-style-tag">Terrain</span>
+        </div>
+        <div class="card-body">
+          <div class="card-business">Cedar &amp; Stone Outdoor Living</div>
+          <p class="card-tagline">Decks, patios, firepits in Asheville — terracotta and forest, grain texture, lifestyle full-bleed hero.</p>
+          <span class="card-link">View demo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <!-- 11. Velocity SaaS -->
+      <a href="demos/velocity-saas.html" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=80&auto=format&fit=crop');">
+          <span class="card-style-tag">Velocity SaaS</span>
+        </div>
+        <div class="card-body">
+          <div class="card-business">Pulse Analytics</div>
+          <p class="card-tagline">Product analytics SaaS, free trial — white base, purple-to-blue gradient, angled UI mockup hero.</p>
+          <span class="card-link">View demo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <!-- 12. Lookbook -->
+      <a href="demos/lookbook.html" class="card">
+        <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900&q=80&auto=format&fit=crop');">
+          <span class="card-style-tag">Lookbook</span>
+        </div>
+        <div class="card-body">
+          <div class="card-business">Marais &amp; Co</div>
+          <p class="card-tagline">Fashion and lifestyle photographer — full-bleed image grid, type overlaid directly on image, editorial sans.</p>
+          <span class="card-link">View demo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ── CLOSING CTA ── -->
+  <section class="closing">
+    <h2>None of these are your site yet.</h2>
+    <p>
+      Each demo is a fully working homepage built in the same way we build yours. Pick a vibe, send it our way, and we'll build it around your business — your brand, your offer, your photos.
+    </p>
+    <a href="https://calendly.com/nicholaswatkins222/15min" class="btn-primary" style="font-size: 15px; padding: 16px 32px;">
+      Book a free 15-min call
+    </a>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <a href="index.html" class="logo" style="font-size: 16px;">
+      NEURAIVE<span class="logo-x-wrap"><span class="logo-x">X</span></span>
+    </a>
+    <div class="footer-text">© Neuraivex · AI-built websites, automations &amp; outreach</div>
+    <a href="https://calendly.com/nicholaswatkins222/15min" class="btn-primary" style="font-size: 12px; padding: 8px 18px;">Book a Call</a>
+  </footer>
+
+  <script>
+    function toggleMobileNav() {
+      document.getElementById('mobileNav').classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>

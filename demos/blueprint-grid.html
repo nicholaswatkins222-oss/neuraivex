@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meridian Engineering — Structural design for buildings that work harder</title>
+  <meta name="description" content="Structural engineering for commercial, healthcare, and transit projects across the Midwest. Licensed in 14 states. Based in Chicago, IL." />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg-base:      #FFFFFF;
+      --bg-tint:      #F8FAFC;
+      --grid:         #E2E8F0;
+      --grid-light:   #EFF3F8;
+      --border:       #CBD5E1;
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --text-muted:   #94A3B8;
+      --accent:       #1E4D8C;
+      --accent-light: #E6EEF8;
+      --accent-mid:   #2E6BB8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+      font-weight: 400;
+    }
+
+    /* Baseline grid overlay across the whole page */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, var(--grid-light) 1px, transparent 1px);
+      background-size: 12.5% 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.7;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'IBM Plex Sans', sans-serif;
+      letter-spacing: -0.015em;
+      font-weight: 500;
+    }
+    .mono { font-family: 'IBM Plex Mono', monospace; }
+    .display {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: clamp(36px, 5.5vw, 64px);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+    }
+    .section-heading {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: clamp(26px, 3.4vw, 38px);
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .body-text {
+      color: var(--text-secondary);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--grid);
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-mark {
+      width: 22px; height: 22px;
+      background: var(--accent);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .logo-mark::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      background: var(--bg-base);
+    }
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      background: var(--accent);
+    }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-link {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+    .nav-link:hover { color: var(--accent); }
+
+    .btn-primary {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 11px 22px;
+      border-radius: 4px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 200ms ease, transform 200ms ease;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover { background: #163E73; transform: translateY(-1px); }
+    .btn-secondary {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 21px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 200ms ease, background 200ms ease;
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+
+    section { position: relative; z-index: 1; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+    /* Hero */
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--bg-tint);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+    }
+    .hero-tag-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #16A34A;
+    }
+
+    /* Spec readout (under hero) */
+    .spec-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--grid);
+      border-radius: 4px;
+      background: var(--bg-tint);
+      margin-top: 64px;
+    }
+    .spec-cell {
+      padding: 24px 28px;
+      border-right: 1px solid var(--grid);
+    }
+    .spec-cell:last-child { border-right: none; }
+    .spec-key {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .spec-val {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+    .spec-sub {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* Feature cards */
+    .feature-card {
+      background: var(--bg-base);
+      border: 1px solid var(--grid);
+      border-radius: 4px;
+      padding: 32px;
+      transition: border-color 200ms ease, background 200ms ease;
+      position: relative;
+    }
+    .feature-card:hover {
+      border-color: var(--accent);
+      background: var(--bg-tint);
+    }
+    .feature-icon {
+      width: 40px; height: 40px;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+    .feature-card .feat-title {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.3;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+    .feature-card .feat-text {
+      font-size: 14.5px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .feat-spec {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px dashed var(--grid);
+    }
+    .feat-spec .k {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .feat-spec .v {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    /* Comparison table */
+    .spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-base);
+      border: 1px solid var(--grid);
+    }
+    .spec-table th, .spec-table td {
+      padding: 16px 20px;
+      text-align: left;
+      border-bottom: 1px solid var(--grid);
+      font-size: 14px;
+    }
+    .spec-table th {
+      background: var(--bg-tint);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      font-weight: 500;
+      border-bottom: 1px solid var(--border);
+    }
+    .spec-table td.spec-name {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: var(--text-primary);
+    }
+    .spec-table td.spec-val-cell {
+      color: var(--text-secondary);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+    }
+    .spec-table td.spec-val-cell.accent {
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .spec-table tr:last-child td { border-bottom: none; }
+    .spec-table tr:hover td { background: var(--bg-tint); }
+
+    /* Client logo strip */
+    .logo-strip {
+      background: var(--bg-tint);
+      border-top: 1px solid var(--grid);
+      border-bottom: 1px solid var(--grid);
+      padding: 56px 0;
+    }
+    .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0;
+      align-items: center;
+    }
+    .logo-item {
+      text-align: center;
+      padding: 16px;
+      border-right: 1px solid var(--grid);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: -0.01em;
+      transition: color 200ms ease;
+    }
+    .logo-item:last-child { border-right: none; }
+    .logo-item:hover { color: var(--accent); }
+
+    /* Project gallery */
+    .project-card {
+      border: 1px solid var(--grid);
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--bg-base);
+      transition: border-color 200ms ease, transform 200ms ease;
+    }
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .project-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(15%);
+    }
+    .project-body { padding: 20px 24px; }
+    .project-type {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .project-title {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .project-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* CTA */
+    .cta-block {
+      background: var(--accent);
+      color: #fff;
+      padding: 64px 48px;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-block::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-tint);
+      border-top: 1px solid var(--grid);
+      padding: 56px 0 24px;
+    }
+    .footer-cols {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--grid);
+      margin-bottom: 24px;
+    }
+    .footer-heading {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .footer-link {
+      display: block;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 4px 0;
+      transition: color 200ms ease;
+    }
+    .footer-link:hover { color: var(--accent); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .container { padding: 0 20px; }
+      .nav-links { display: none; }
+      body::before { background-size: 25% 100%; }
+      .spec-bar { grid-template-columns: 1fr 1fr; }
+      .spec-cell:nth-child(2n) { border-right: none; }
+      .spec-cell:nth-child(-n+2) { border-bottom: 1px solid var(--grid); }
+      .grid-3 { grid-template-columns: 1fr !important; }
+      .grid-2 { grid-template-columns: 1fr !important; }
+      .logo-grid { grid-template-columns: repeat(3, 1fr); }
+      .logo-item:nth-child(3n) { border-right: none; }
+      .logo-item:nth-child(-n+3) { border-bottom: 1px solid var(--grid); }
+      .footer-cols { grid-template-columns: 1fr 1fr; }
+      .cta-block { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo">
+      <span class="logo-mark"></span>
+      Meridian Engineering
+    </a>
+    <div class="nav-links">
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#specs" class="nav-link">Capabilities</a>
+      <a href="#firm" class="nav-link">Firm</a>
+    </div>
+    <div style="display: flex; gap: 12px; align-items: center;">
+      <a href="#" class="nav-link" style="font-size: 13px;">Docs</a>
+      <a href="#contact" class="btn-primary">Start a project</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section style="padding-top: 152px; padding-bottom: 96px;">
+    <div class="container">
+      <div style="margin-bottom: 24px;">
+        <span class="hero-tag">
+          <span class="hero-tag-dot"></span>
+          PROJECT INTAKE OPEN · Q3 2026
+        </span>
+      </div>
+
+      <h1 class="display" style="max-width: 920px; margin-bottom: 28px;">
+        Structural engineering for buildings that have to work harder than the building next door.
+      </h1>
+
+      <p class="body-text" style="max-width: 620px; margin-bottom: 36px; font-size: 18px;">
+        Meridian is a 14-engineer structural firm in Chicago. We design steel and concrete frames for high-rise, healthcare, and transit projects across the Midwest. Licensed in 14 states. ACI- and AISC-certified.
+      </p>
+
+      <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+        <a href="#contact" class="btn-primary">Start a project</a>
+        <a href="#specs" class="btn-secondary">View capabilities</a>
+      </div>
+
+      <!-- Spec bar -->
+      <div class="spec-bar">
+        <div class="spec-cell">
+          <div class="spec-key">Founded</div>
+          <div class="spec-val">2009</div>
+          <div class="spec-sub">Chicago, IL · 14 staff</div>
+        </div>
+        <div class="spec-cell">
+          <div class="spec-key">Projects in design</div>
+          <div class="spec-val">42</div>
+          <div class="spec-sub">across 9 states</div>
+        </div>
+        <div class="spec-cell">
+          <div class="spec-key">Built sq. ft.</div>
+          <div class="spec-val">6.4M</div>
+          <div class="spec-sub">cumulative, 2009–present</div>
+        </div>
+        <div class="spec-cell">
+          <div class="spec-key">RFI turnaround</div>
+          <div class="spec-val">&lt; 48 hrs</div>
+          <div class="spec-sub">avg on active projects</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENT LOGO STRIP -->
+  <section class="logo-strip">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 28px;">
+        <span class="mono" style="font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted);">— Selected General Contractors &amp; Developers —</span>
+      </div>
+      <div class="logo-grid">
+        <div class="logo-item">Hartwell &amp; Bain</div>
+        <div class="logo-item">Lakefront Capital</div>
+        <div class="logo-item">Sterling Reach</div>
+        <div class="logo-item">Vorland Partners</div>
+        <div class="logo-item">Argo Build Co.</div>
+        <div class="logo-item">Northwall Realty</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE-COLUMN FEATURES -->
+  <section id="services" style="padding: 96px 0;">
+    <div class="container">
+      <div style="margin-bottom: 56px; max-width: 720px;">
+        <div class="label" style="margin-bottom: 16px;">/ 01 SERVICES</div>
+        <h2 class="section-heading">Three practice areas. One engineering team.</h2>
+        <p class="body-text" style="margin-top: 16px;">
+          We staff every project with a registered PE on lead, a project engineer in coordination, and a BIM lead handling clash detection through DD. Same team start to finish.
+        </p>
+      </div>
+
+      <div class="grid-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter">
+              <rect x="3" y="3" width="18" height="18"/>
+              <line x1="3" y1="9" x2="21" y2="9"/>
+              <line x1="3" y1="15" x2="21" y2="15"/>
+              <line x1="9" y1="3" x2="9" y2="21"/>
+              <line x1="15" y1="3" x2="15" y2="21"/>
+            </svg>
+          </div>
+          <div class="feat-title">High-rise &amp; mixed-use</div>
+          <p class="feat-text">
+            Composite steel and reinforced concrete towers, 8–42 stories. Wind tunnel coordination, lateral system optimization, and post-tensioned floor plates for tight floor-to-floor heights.
+          </p>
+          <div class="feat-spec">
+            <div class="k">Tallest delivered</div>
+            <div class="v">38 stories</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter">
+              <path d="M12 2 L4 7 L4 21 L20 21 L20 7 Z"/>
+              <line x1="12" y1="8" x2="12" y2="16"/>
+              <line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
+          </div>
+          <div class="feat-title">Healthcare &amp; lab</div>
+          <p class="feat-text">
+            OSHPD-style vibration-controlled framing for imaging suites and wet labs. Seismic detailing per IBC 2024 with redundant lateral systems and operational continuity targets.
+          </p>
+          <div class="feat-spec">
+            <div class="k">Vibration spec</div>
+            <div class="v">VC-A typ.</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter">
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <line x1="6" y1="8" x2="6" y2="16"/>
+              <line x1="12" y1="6" x2="12" y2="18"/>
+              <line x1="18" y1="8" x2="18" y2="16"/>
+            </svg>
+          </div>
+          <div class="feat-title">Transit &amp; infrastructure</div>
+          <p class="feat-text">
+            Stations, platforms, pedestrian bridges, and parking structures. AASHTO LRFD compliance, fatigue analysis on bracing systems, and accelerated construction techniques for live-track environments.
+          </p>
+          <div class="feat-spec">
+            <div class="k">Design code</div>
+            <div class="v">AASHTO LRFD 9th</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON SPEC TABLE -->
+  <section id="specs" style="padding: 96px 0; background: var(--bg-tint); border-top: 1px solid var(--grid); border-bottom: 1px solid var(--grid);">
+    <div class="container">
+      <div style="margin-bottom: 48px; max-width: 720px;">
+        <div class="label" style="margin-bottom: 16px;">/ 02 CAPABILITIES</div>
+        <h2 class="section-heading">Engineering specs across the practice.</h2>
+        <p class="body-text" style="margin-top: 16px;">
+          What we deliver, on what software, to which codes. If your project sits outside any of these envelopes, tell us — we can usually scope it in.
+        </p>
+      </div>
+
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th>Capability</th>
+            <th>High-Rise</th>
+            <th>Healthcare</th>
+            <th>Transit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="spec-name">Building code</td>
+            <td class="spec-val-cell accent">IBC 2024</td>
+            <td class="spec-val-cell accent">IBC 2024 / FGI</td>
+            <td class="spec-val-cell accent">AASHTO LRFD 9th</td>
+          </tr>
+          <tr>
+            <td class="spec-name">Lateral system</td>
+            <td class="spec-val-cell">Core + outrigger</td>
+            <td class="spec-val-cell">Dual SMRF/BRBF</td>
+            <td class="spec-val-cell">Steel SCBF</td>
+          </tr>
+          <tr>
+            <td class="spec-name">Primary software</td>
+            <td class="spec-val-cell">ETABS · Revit · Tekla</td>
+            <td class="spec-val-cell">RAM · Revit · Navisworks</td>
+            <td class="spec-val-cell">SAP2000 · LARSA</td>
+          </tr>
+          <tr>
+            <td class="spec-name">Typical bay</td>
+            <td class="spec-val-cell">30' × 30'</td>
+            <td class="spec-val-cell">28' × 32'</td>
+            <td class="spec-val-cell">26' × 60'</td>
+          </tr>
+          <tr>
+            <td class="spec-name">Vibration target</td>
+            <td class="spec-val-cell">L/360 service</td>
+            <td class="spec-val-cell accent">VC-A / VC-B</td>
+            <td class="spec-val-cell">AASHTO Δ/800</td>
+          </tr>
+          <tr>
+            <td class="spec-name">Delivery method</td>
+            <td class="spec-val-cell">DBB · CMAR · DB</td>
+            <td class="spec-val-cell">IPD · CMAR</td>
+            <td class="spec-val-cell">DB · P3</td>
+          </tr>
+          <tr>
+            <td class="spec-name">Drawing turnaround</td>
+            <td class="spec-val-cell">DD: 8 wk · CD: 12 wk</td>
+            <td class="spec-val-cell">DD: 10 wk · CD: 14 wk</td>
+            <td class="spec-val-cell">DD: 12 wk · CD: 16 wk</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PROJECT GALLERY -->
+  <section id="projects" style="padding: 96px 0;">
+    <div class="container">
+      <div style="margin-bottom: 48px; max-width: 720px;">
+        <div class="label" style="margin-bottom: 16px;">/ 03 SELECTED PROJECTS</div>
+        <h2 class="section-heading">Recent work in design and construction.</h2>
+      </div>
+
+      <div class="grid-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+
+        <div class="project-card">
+          <img class="project-img" src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80&auto=format&fit=crop" alt="High-rise tower" loading="lazy" />
+          <div class="project-body">
+            <div class="project-type">HIGH-RISE / RESIDENTIAL</div>
+            <div class="project-title">North Loop Tower</div>
+            <div class="project-meta">Chicago, IL · 32 stories · 2025</div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img class="project-img" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=80&auto=format&fit=crop" alt="Hospital building" loading="lazy" />
+          <div class="project-body">
+            <div class="project-type">HEALTHCARE / IMAGING</div>
+            <div class="project-title">Cedarbrook Medical Pavilion</div>
+            <div class="project-meta">Indianapolis, IN · 220,000 sf · 2024</div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img class="project-img" src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=1200&q=80&auto=format&fit=crop" alt="Transit station" loading="lazy" />
+          <div class="project-body">
+            <div class="project-type">TRANSIT / RAIL</div>
+            <div class="project-title">Riverwest Transit Station</div>
+            <div class="project-meta">Milwaukee, WI · CMAR · in CD</div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img class="project-img" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80&auto=format&fit=crop" alt="Office tower" loading="lazy" />
+          <div class="project-body">
+            <div class="project-type">HIGH-RISE / OFFICE</div>
+            <div class="project-title">Argo Block C</div>
+            <div class="project-meta">St. Louis, MO · 24 stories · 2023</div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img class="project-img" src="https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=1200&q=80&auto=format&fit=crop" alt="Lab interior" loading="lazy" />
+          <div class="project-body">
+            <div class="project-type">LAB / RESEARCH</div>
+            <div class="project-title">Vannard Life Sciences Block</div>
+            <div class="project-meta">Madison, WI · 165,000 sf · 2024</div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img class="project-img" src="https://images.unsplash.com/photo-1486718448742-163732cd1544?w=1200&q=80&auto=format&fit=crop" alt="Pedestrian bridge" loading="lazy" />
+          <div class="project-body">
+            <div class="project-type">INFRASTRUCTURE / BRIDGE</div>
+            <div class="project-title">Harbor Cut Pedestrian Bridge</div>
+            <div class="project-meta">Cleveland, OH · 420' span · 2025</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FIRM / CTA -->
+  <section id="firm" style="padding: 96px 0;">
+    <div class="container">
+      <div class="cta-block">
+        <div style="position: relative; z-index: 2; max-width: 720px;">
+          <div class="mono" style="font-size: 11px; letter-spacing: 0.16em; color: rgba(255,255,255,0.7); margin-bottom: 20px;">/ 04 GET IN TOUCH</div>
+          <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: clamp(28px, 3.4vw, 40px); font-weight: 500; line-height: 1.15; margin-bottom: 16px; letter-spacing: -0.02em;">
+            Have a project that needs engineering before it goes to permit?
+          </h2>
+          <p style="font-size: 16px; line-height: 1.7; color: rgba(255,255,255,0.85); margin-bottom: 32px; max-width: 540px;">
+            Send the program, the site, and any geotech you have. We'll respond within one business day with a fee proposal and a project lead's calendar.
+          </p>
+          <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+            <a href="#contact" style="font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; font-weight: 500; padding: 12px 24px; border-radius: 4px; background: #fff; color: var(--accent); text-decoration: none; display: inline-block;">Request a fee proposal →</a>
+            <a href="#" style="font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; font-weight: 500; padding: 11px 23px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.4); color: #fff; text-decoration: none; display: inline-block;">Download capability brief (PDF)</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER (docs-style) -->
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-cols">
+        <div>
+          <a href="#" class="logo" style="margin-bottom: 16px;">
+            <span class="logo-mark"></span>
+            Meridian Engineering
+          </a>
+          <p class="body-text" style="font-size: 13.5px; margin-top: 12px; max-width: 280px;">
+            Structural engineering for the buildings, hospitals, and infrastructure of the Midwest.
+          </p>
+          <div class="mono" style="margin-top: 20px; font-size: 12px; color: var(--text-secondary); line-height: 1.7;">
+            225 W Adams St, Suite 1840<br />
+            Chicago, IL 60606<br />
+            +1 (312) 555-0184<br />
+            studio@meridian-eng.com
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-heading">Practice</div>
+          <a href="#" class="footer-link">High-rise &amp; mixed-use</a>
+          <a href="#" class="footer-link">Healthcare &amp; lab</a>
+          <a href="#" class="footer-link">Transit &amp; infrastructure</a>
+          <a href="#" class="footer-link">Forensic &amp; restoration</a>
+        </div>
+
+        <div>
+          <div class="footer-heading">Resources</div>
+          <a href="#" class="footer-link">Capability brief</a>
+          <a href="#" class="footer-link">PE/SE licenses (14 states)</a>
+          <a href="#" class="footer-link">Sustainability statement</a>
+          <a href="#" class="footer-link">CSI MasterFormat specs</a>
+        </div>
+
+        <div>
+          <div class="footer-heading">Firm</div>
+          <a href="#" class="footer-link">About</a>
+          <a href="#" class="footer-link">Engineering team</a>
+          <a href="#" class="footer-link">Careers (3 open)</a>
+          <a href="#" class="footer-link">Press &amp; awards</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Meridian Engineering, LLC · Illinois PE Firm License 184-001234</span>
+        <span>v.2026.05.11 · last updated 05-04</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to gallery link -->
+  <a href="../demos.html" style="position:fixed;bottom:20px;left:20px;background:rgba(0,0,0,0.85);color:#fff;padding:10px 16px;border-radius:8px;font-family:-apple-system,sans-serif;font-size:13px;text-decoration:none;z-index:9999;backdrop-filter:blur(8px);">← Back to demos</a>
+
+</body>
+</html>

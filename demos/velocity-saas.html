@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pulse Analytics — See what your users actually do</title>
+  <meta name="description" content="Product analytics without the setup pain. Auto-capture events, build funnels in seconds, and answer real product questions. 14-day free trial." />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg-base:      #FFFFFF;
+      --bg-tint:      #FAFAFE;
+      --border:       #E6E8EF;
+      --text-primary: #0B0E1A;
+      --text-secondary: #4F5670;
+      --text-muted:   #8B92AB;
+      --accent-start: #7C5CE6;
+      --accent-end:   #38C4F0;
+      --accent:       #7C5CE6;
+      --gradient:     linear-gradient(135deg, #7C5CE6 0%, #38C4F0 100%);
+      --gradient-soft: linear-gradient(135deg, rgba(124,92,230,0.08) 0%, rgba(56,196,240,0.08) 100%);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: -0.025em;
+    }
+    .display {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(40px, 5.5vw, 68px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+    }
+    .section-heading {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(28px, 3.6vw, 42px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+    }
+    .body-text {
+      color: var(--text-secondary);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+    .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .label {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .logo-mark {
+      width: 26px; height: 26px;
+      border-radius: 8px;
+      background: var(--gradient);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(124, 92, 230, 0.3);
+    }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-link {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+    .nav-link:hover { color: var(--text-primary); }
+
+    .btn-primary {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: 10px;
+      background: var(--gradient);
+      color: #fff;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+      box-shadow: 0 8px 22px rgba(124, 92, 230, 0.25);
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px rgba(124, 92, 230, 0.35);
+    }
+    .btn-secondary {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 21px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-base);
+      color: var(--text-primary);
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 180ms ease, background 180ms ease;
+    }
+    .btn-secondary:hover { border-color: var(--accent); background: var(--bg-tint); }
+
+    section { position: relative; z-index: 1; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+
+    /* Hero background */
+    .hero-glow {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 50% 40% at 30% 20%, rgba(124, 92, 230, 0.12), transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 30%, rgba(56, 196, 240, 0.10), transparent 70%);
+      pointer-events: none;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 100px;
+      background: var(--gradient-soft);
+      border: 1px solid rgba(124, 92, 230, 0.2);
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+    }
+    .pill-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent-end);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* Dashboard mockup */
+    .dash-wrap {
+      perspective: 1800px;
+      perspective-origin: center 40%;
+      margin-top: 64px;
+    }
+    .dash {
+      transform: rotateX(8deg) rotateY(-3deg);
+      transform-style: preserve-3d;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow:
+        0 50px 100px rgba(11, 14, 26, 0.18),
+        0 24px 48px rgba(124, 92, 230, 0.12),
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 0 0 1px var(--border);
+      overflow: hidden;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .dash-bar {
+      background: linear-gradient(180deg, #F8F8FC, #F1F2F8);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dash-dot {
+      width: 11px; height: 11px;
+      border-radius: 50%;
+    }
+    .dash-dot.r { background: #FF5F57; }
+    .dash-dot.y { background: #FFBD2E; }
+    .dash-dot.g { background: #28C840; }
+    .dash-url {
+      flex: 1;
+      margin-left: 16px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      color: var(--text-muted);
+      max-width: 320px;
+    }
+    .dash-body {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      min-height: 460px;
+    }
+    .dash-side {
+      background: #FAFAFE;
+      border-right: 1px solid var(--border);
+      padding: 18px 14px;
+    }
+    .dash-side-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 14px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+    .dash-side-logo .lm { width: 18px; height: 18px; border-radius: 5px; background: var(--gradient); }
+    .dash-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 8px;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 2px;
+      cursor: default;
+    }
+    .dash-nav-item.active {
+      background: rgba(124, 92, 230, 0.08);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .dash-nav-icon {
+      width: 14px; height: 14px;
+      border-radius: 3px;
+      background: var(--border);
+      display: inline-block;
+    }
+    .dash-nav-item.active .dash-nav-icon { background: var(--gradient); }
+    .dash-section-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 14px 8px 6px;
+    }
+
+    .dash-main { padding: 22px 24px; }
+    .dash-h {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .dash-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .dash-period {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 5px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    .dash-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .dash-stat {
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+    }
+    .dash-stat-k {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .dash-stat-v {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+    .dash-stat-d {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      color: #16A34A;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    .dash-stat-d.neg { color: #DC2626; }
+
+    .dash-chart {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      height: 200px;
+      position: relative;
+    }
+    .dash-chart svg { width: 100%; height: 100%; }
+
+    .dash-funnel {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+    .funnel-row {
+      display: grid;
+      grid-template-columns: 100px 1fr 70px;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+    }
+    .funnel-step { color: var(--text-secondary); }
+    .funnel-bar { height: 16px; border-radius: 4px; background: var(--gradient); }
+    .funnel-val { text-align: right; color: var(--text-primary); font-weight: 600; }
+
+    /* Feature trio */
+    .feature-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 32px;
+      transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(11, 14, 26, 0.06);
+      border-color: rgba(124, 92, 230, 0.3);
+    }
+    .feat-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 20px rgba(124, 92, 230, 0.25);
+    }
+    .feat-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.015em;
+    }
+    .feat-text { color: var(--text-secondary); font-size: 14.5px; line-height: 1.65; }
+
+    /* Social proof */
+    .proof-strip {
+      background: var(--bg-tint);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 56px 0;
+    }
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+      align-items: center;
+    }
+    .proof-item {
+      text-align: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: -0.02em;
+      padding: 14px 8px;
+      transition: color 200ms ease;
+    }
+    .proof-item:hover { color: var(--text-primary); }
+
+    /* Pricing */
+    .price-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 36px 32px;
+      position: relative;
+      transition: border-color 200ms ease;
+    }
+    .price-card.featured {
+      border: 2px solid transparent;
+      background:
+        linear-gradient(#fff, #fff) padding-box,
+        var(--gradient) border-box;
+      transform: scale(1.025);
+      box-shadow: 0 24px 60px rgba(124, 92, 230, 0.15);
+    }
+    .price-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gradient);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      text-transform: uppercase;
+    }
+    .price-tier {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+    .price-amt {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 44px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    .price-per { font-size: 14px; color: var(--text-muted); font-weight: 500; }
+    .price-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      margin: 10px 0 24px;
+      line-height: 1.55;
+    }
+    .price-feat {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 24px 0 32px;
+      padding: 24px 0 0;
+      border-top: 1px solid var(--border);
+    }
+    .price-feat li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .price-feat li::before {
+      content: '';
+      width: 16px; height: 16px;
+      flex-shrink: 0;
+      margin-top: 3px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3 8L6.5 11.5L13 5' stroke='%237C5CE6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+
+    /* FAQ */
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 24px 0;
+    }
+    .faq-item:first-child { padding-top: 0; }
+    .faq-q {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      letter-spacing: -0.015em;
+    }
+    .faq-a {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* CTA */
+    .cta-block {
+      background: var(--gradient);
+      border-radius: 20px;
+      padding: 72px 48px;
+      color: #fff;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-block::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15), transparent 50%);
+      pointer-events: none;
+    }
+    .cta-block::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1), transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-tint);
+      border-top: 1px solid var(--border);
+      padding: 56px 0 24px;
+    }
+    .footer-cols {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .footer-heading {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+    .footer-link {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 4px 0;
+      transition: color 200ms ease;
+    }
+    .footer-link:hover { color: var(--accent); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .dash-side { display: none; }
+      .dash-body { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .container { padding: 0 20px; }
+      .nav-links { display: none; }
+      .grid-3 { grid-template-columns: 1fr !important; }
+      .grid-2 { grid-template-columns: 1fr !important; }
+      .dash { transform: none; max-width: 100%; }
+      .dash-stats { grid-template-columns: 1fr 1fr; }
+      .proof-grid { grid-template-columns: repeat(3, 1fr); }
+      .price-card.featured { transform: none; }
+      .price-grid { grid-template-columns: 1fr !important; }
+      .footer-cols { grid-template-columns: 1fr 1fr; }
+      .cta-block { padding: 48px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo">
+      <span class="logo-mark">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 12 7 12 10 4 14 20 17 12 21 12"/>
+        </svg>
+      </span>
+      Pulse
+    </a>
+    <div class="nav-links">
+      <a href="#features" class="nav-link">Product</a>
+      <a href="#" class="nav-link">Integrations</a>
+      <a href="#pricing" class="nav-link">Pricing</a>
+      <a href="#" class="nav-link">Docs</a>
+      <a href="#" class="nav-link">Changelog</a>
+    </div>
+    <div style="display: flex; gap: 12px; align-items: center;">
+      <a href="#" class="nav-link" style="font-size: 13px;">Sign in</a>
+      <a href="#" class="btn-primary">Start free</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section style="padding-top: 152px; padding-bottom: 96px; overflow: hidden;">
+    <div class="hero-glow"></div>
+    <div class="container" style="position: relative; z-index: 2; text-align: center;">
+
+      <div style="margin-bottom: 24px;">
+        <span class="pill"><span class="pill-dot"></span>v3.4 just shipped — session replays now live</span>
+      </div>
+
+      <h1 class="display" style="max-width: 880px; margin: 0 auto 24px;">
+        See what your users <span class="gradient-text">actually do</span> — without the setup pain.
+      </h1>
+
+      <p class="body-text" style="max-width: 620px; margin: 0 auto 36px; font-size: 18px;">
+        Pulse auto-captures every click, page, and event the moment you drop in our SDK. Build funnels, retention curves, and segments in seconds — not engineering sprints.
+      </p>
+
+      <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px;">
+        <a href="#" class="btn-primary" style="font-size: 15px; padding: 14px 28px;">Start 14-day free trial</a>
+        <a href="#features" class="btn-secondary" style="font-size: 15px; padding: 13px 27px;">See the product →</a>
+      </div>
+
+      <p style="font-size: 13px; color: var(--text-muted);">
+        No credit card · Auto-capture in 60 seconds · Free up to 50,000 events/mo
+      </p>
+
+      <!-- Dashboard Mockup -->
+      <div class="dash-wrap">
+        <div class="dash">
+          <div class="dash-bar">
+            <div class="dash-dot r"></div>
+            <div class="dash-dot y"></div>
+            <div class="dash-dot g"></div>
+            <div class="dash-url">app.pulse.io/dashboard/funnels/onboarding</div>
+          </div>
+
+          <div class="dash-body">
+            <!-- Sidebar -->
+            <div class="dash-side">
+              <div class="dash-side-logo">
+                <span class="lm"></span> Pulse
+              </div>
+              <div class="dash-section-label">Workspace</div>
+              <div class="dash-nav-item active"><span class="dash-nav-icon"></span> Dashboards</div>
+              <div class="dash-nav-item"><span class="dash-nav-icon"></span> Funnels</div>
+              <div class="dash-nav-item"><span class="dash-nav-icon"></span> Retention</div>
+              <div class="dash-nav-item"><span class="dash-nav-icon"></span> Sessions</div>
+              <div class="dash-nav-item"><span class="dash-nav-icon"></span> Segments</div>
+
+              <div class="dash-section-label">Data</div>
+              <div class="dash-nav-item"><span class="dash-nav-icon"></span> Events</div>
+              <div class="dash-nav-item"><span class="dash-nav-icon"></span> Properties</div>
+              <div class="dash-nav-item"><span class="dash-nav-icon"></span> Integrations</div>
+            </div>
+
+            <!-- Main -->
+            <div class="dash-main">
+              <div class="dash-h">
+                <div>
+                  <div class="dash-title">Onboarding funnel</div>
+                  <div style="font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-muted); margin-top: 2px;">All users · 7 day conversion</div>
+                </div>
+                <div class="dash-period">Last 14 days</div>
+              </div>
+
+              <!-- Stat cards -->
+              <div class="dash-stats">
+                <div class="dash-stat">
+                  <div class="dash-stat-k">Signups</div>
+                  <div class="dash-stat-v">8,412</div>
+                  <div class="dash-stat-d">↑ 12.4%</div>
+                </div>
+                <div class="dash-stat">
+                  <div class="dash-stat-k">Activation</div>
+                  <div class="dash-stat-v">62.1%</div>
+                  <div class="dash-stat-d">↑ 3.2%</div>
+                </div>
+                <div class="dash-stat">
+                  <div class="dash-stat-k">D7 retention</div>
+                  <div class="dash-stat-v">41.8%</div>
+                  <div class="dash-stat-d neg">↓ 0.6%</div>
+                </div>
+                <div class="dash-stat">
+                  <div class="dash-stat-k">MRR new</div>
+                  <div class="dash-stat-v">$24,180</div>
+                  <div class="dash-stat-d">↑ 18.0%</div>
+                </div>
+              </div>
+
+              <!-- Chart -->
+              <div class="dash-chart">
+                <svg viewBox="0 0 600 180" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="grad-fill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#7C5CE6" stop-opacity="0.25"/>
+                      <stop offset="100%" stop-color="#7C5CE6" stop-opacity="0"/>
+                    </linearGradient>
+                    <linearGradient id="grad-line" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stop-color="#7C5CE6"/>
+                      <stop offset="100%" stop-color="#38C4F0"/>
+                    </linearGradient>
+                  </defs>
+                  <!-- Grid -->
+                  <line x1="0" y1="45" x2="600" y2="45" stroke="#EEF0F6" stroke-width="1"/>
+                  <line x1="0" y1="90" x2="600" y2="90" stroke="#EEF0F6" stroke-width="1"/>
+                  <line x1="0" y1="135" x2="600" y2="135" stroke="#EEF0F6" stroke-width="1"/>
+                  <!-- Area -->
+                  <path d="M 0 130 L 50 110 L 100 120 L 150 95 L 200 85 L 250 90 L 300 70 L 350 75 L 400 55 L 450 45 L 500 50 L 550 35 L 600 28 L 600 180 L 0 180 Z" fill="url(#grad-fill)"/>
+                  <!-- Line -->
+                  <path d="M 0 130 L 50 110 L 100 120 L 150 95 L 200 85 L 250 90 L 300 70 L 350 75 L 400 55 L 450 45 L 500 50 L 550 35 L 600 28" stroke="url(#grad-line)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- Dots -->
+                  <circle cx="600" cy="28" r="4" fill="#fff" stroke="#38C4F0" stroke-width="2.5"/>
+                </svg>
+              </div>
+
+              <!-- Funnel -->
+              <div class="dash-funnel">
+                <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 8px;">Conversion path</div>
+                <div class="funnel-row">
+                  <span class="funnel-step">View landing</span>
+                  <span class="funnel-bar" style="width: 100%;"></span>
+                  <span class="funnel-val">8,412</span>
+                </div>
+                <div class="funnel-row">
+                  <span class="funnel-step">Sign up</span>
+                  <span class="funnel-bar" style="width: 78%;"></span>
+                  <span class="funnel-val">6,562</span>
+                </div>
+                <div class="funnel-row">
+                  <span class="funnel-step">Connect data</span>
+                  <span class="funnel-bar" style="width: 52%;"></span>
+                  <span class="funnel-val">4,374</span>
+                </div>
+                <div class="funnel-row">
+                  <span class="funnel-step">Create chart</span>
+                  <span class="funnel-bar" style="width: 41%;"></span>
+                  <span class="funnel-val">3,449</span>
+                </div>
+                <div class="funnel-row">
+                  <span class="funnel-step">Activated</span>
+                  <span class="funnel-bar" style="width: 32%;"></span>
+                  <span class="funnel-val">2,692</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF -->
+  <section class="proof-strip">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 28px;">
+        <span style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-muted); letter-spacing: 0.04em;">Used by product teams at</span>
+      </div>
+      <div class="proof-grid">
+        <div class="proof-item">Loomstack</div>
+        <div class="proof-item">Anvil HQ</div>
+        <div class="proof-item">Quillforms</div>
+        <div class="proof-item">Halcyon</div>
+        <div class="proof-item">Northcast</div>
+        <div class="proof-item">Drifthouse</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" style="padding: 112px 0;">
+    <div class="container">
+      <div style="text-align: center; max-width: 680px; margin: 0 auto 64px;">
+        <div class="label" style="margin-bottom: 16px;">Product</div>
+        <h2 class="section-heading">Built for product teams who don't want to wait on engineering.</h2>
+        <p class="body-text" style="margin-top: 18px; font-size: 17px;">
+          Drop in one line. Pulse captures every event automatically. Build the answer you need in the time it takes to make coffee.
+        </p>
+      </div>
+
+      <div class="grid-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <div class="feat-title">Auto-capture, every event</div>
+          <p class="feat-text">
+            One SDK install logs every click, page view, form interaction, and rage click. No more PMs filing tickets for "can we track this button too?"
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <line x1="9" y1="9" x2="9" y2="15"/>
+              <line x1="13" y1="13" x2="13" y2="15"/>
+              <line x1="17" y1="7" x2="17" y2="15"/>
+            </svg>
+          </div>
+          <div class="feat-title">Funnels in 30 seconds</div>
+          <p class="feat-text">
+            Pick three events. See drop-off by segment, country, device, or any custom property. No SQL, no data team handoff, no half-built dashboards.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="feat-title">Session replays, indexed</div>
+          <p class="feat-text">
+            Watch the exact session of any user who churned, rage-clicked, or dropped off. Replays are searchable by event — find every user who hit your error toast.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+            </svg>
+          </div>
+          <div class="feat-title">Cohorts that update themselves</div>
+          <p class="feat-text">
+            Define "users who upgraded after seeing the AI feature" once. Pulse keeps the cohort fresh and lets you compare it to anyone — for as long as the metric matters.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"/>
+              <circle cx="6" cy="12" r="3"/>
+              <circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+          </div>
+          <div class="feat-title">38 integrations, no glue code</div>
+          <p class="feat-text">
+            Stripe, Segment, Snowflake, Slack, HubSpot, Intercom — connect once, see revenue and behavior in the same chart. Reverse-ETL back into your warehouse on a schedule.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2 L2 7 L12 12 L22 7 Z"/>
+              <polyline points="2 17 12 22 22 17"/>
+              <polyline points="2 12 12 17 22 12"/>
+            </svg>
+          </div>
+          <div class="feat-title">SOC 2 + GDPR + HIPAA</div>
+          <p class="feat-text">
+            EU data residency, masked replays, per-property PII controls. The compliance docs are in the share drive five minutes after your security review starts.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" style="padding: 96px 0; background: var(--bg-tint); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <div style="text-align: center; max-width: 600px; margin: 0 auto 56px;">
+        <div class="label" style="margin-bottom: 16px;">Pricing</div>
+        <h2 class="section-heading">Free until you outgrow it.</h2>
+        <p class="body-text" style="margin-top: 16px;">
+          Pay per event volume, not per seat. Invite your whole company on day one.
+        </p>
+      </div>
+
+      <div class="price-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1040px; margin: 0 auto;">
+
+        <div class="price-card">
+          <div class="price-tier">Starter</div>
+          <div class="price-amt">$0</div>
+          <div class="price-per" style="margin-top: 6px;">free forever · no card</div>
+          <p class="price-desc">For small teams just starting to instrument their product.</p>
+          <ul class="price-feat">
+            <li>50,000 events / month</li>
+            <li>30-day data retention</li>
+            <li>Up to 3 dashboards</li>
+            <li>Unlimited seats</li>
+            <li>Community support</li>
+          </ul>
+          <a href="#" class="btn-secondary" style="width: 100%; text-align: center; padding: 12px;">Start free</a>
+        </div>
+
+        <div class="price-card featured">
+          <span class="price-badge">Most popular</span>
+          <div class="price-tier">Growth</div>
+          <div class="price-amt">$149<span class="price-per">/mo</span></div>
+          <div class="price-per" style="margin-top: 6px;">billed monthly · cancel anytime</div>
+          <p class="price-desc">For product teams running funnels, retention, and feature analysis as a daily habit.</p>
+          <ul class="price-feat">
+            <li>2,000,000 events / month</li>
+            <li>1-year data retention</li>
+            <li>Unlimited dashboards &amp; funnels</li>
+            <li>Session replay (50k sessions / mo)</li>
+            <li>Slack &amp; Intercom integrations</li>
+            <li>Email support · &lt; 12hr response</li>
+          </ul>
+          <a href="#" class="btn-primary" style="width: 100%; text-align: center; padding: 13px;">Start 14-day trial</a>
+        </div>
+
+        <div class="price-card">
+          <div class="price-tier">Scale</div>
+          <div class="price-amt">Custom</div>
+          <div class="price-per" style="margin-top: 6px;">annual contract · volume tiers</div>
+          <p class="price-desc">For larger product orgs with security review, SSO, and warehouse-scale event volume.</p>
+          <ul class="price-feat">
+            <li>10M+ events / month</li>
+            <li>Unlimited retention</li>
+            <li>SSO (SAML) + SCIM provisioning</li>
+            <li>EU / US data residency</li>
+            <li>SOC 2, GDPR, HIPAA BAA</li>
+            <li>Dedicated CSM · 99.99% SLA</li>
+          </ul>
+          <a href="#" class="btn-secondary" style="width: 100%; text-align: center; padding: 12px;">Talk to sales</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="padding: 96px 0;">
+    <div class="container" style="max-width: 760px;">
+      <div style="text-align: center; margin-bottom: 56px;">
+        <div class="label" style="margin-bottom: 16px;">FAQ</div>
+        <h2 class="section-heading">Things we get asked, before the demo call.</h2>
+      </div>
+
+      <div>
+
+        <div class="faq-item">
+          <div class="faq-q">How long does setup actually take?</div>
+          <div class="faq-a">
+            For most React, Next.js, and Vue apps, it's a single <code style="font-family: 'Inter', sans-serif; background: var(--bg-tint); padding: 2px 6px; border-radius: 4px; font-size: 13px;">npm install</code> and a one-line init call. Auto-capture starts flowing events the moment you deploy. For server-side or mobile, our SDK templates take an afternoon at most.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">How is Pulse different from Mixpanel, Amplitude, or PostHog?</div>
+          <div class="faq-a">
+            Three things: auto-capture is on by default (no manual instrumentation queue), session replay is included in every tier above Starter, and event volume — not seats — is the only thing that drives pricing. Most teams cut their analytics bill by 40–60% when they switch.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Do you have a free trial without entering a card?</div>
+          <div class="faq-a">
+            Yes. Starter is free forever with 50k events/month and unlimited seats. If you want to evaluate Growth-tier features, the 14-day trial doesn't require a card either — we'll send a reminder before it expires.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">Can I host this in our own cloud?</div>
+          <div class="faq-a">
+            On the Scale tier, yes. We support customer-managed AWS and GCP deployments with the same UI, plus a single-tenant managed offering in EU and US regions. Talk to sales for an architecture call.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">What does the migration from our current tool look like?</div>
+          <div class="faq-a">
+            Most teams run Pulse alongside their current tool for 30–60 days. We'll import your existing event schema, mirror your top dashboards, and provide a side-by-side comparison. Our solutions engineer will run the kickoff at no extra cost.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding: 0 0 120px;">
+    <div class="container">
+      <div class="cta-block">
+        <div style="position: relative; z-index: 1; max-width: 640px; margin: 0 auto;">
+          <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(32px, 4vw, 48px); font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 18px;">
+            Start measuring what matters.
+          </h2>
+          <p style="font-family: 'Inter', sans-serif; font-size: 17px; color: rgba(255,255,255,0.92); margin-bottom: 36px; max-width: 500px; margin-left: auto; margin-right: auto;">
+            Drop in the SDK, watch the events stream in, build your first funnel before lunch.
+          </p>
+          <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+            <a href="#" style="font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; padding: 14px 28px; border-radius: 10px; background: #fff; color: var(--accent); text-decoration: none; display: inline-block; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">Start 14-day free trial</a>
+            <a href="#" style="font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; padding: 13px 27px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.4); color: #fff; text-decoration: none; display: inline-block;">Book a demo</a>
+          </div>
+          <p style="font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 22px;">No credit card · Cancel anytime · SOC 2 Type II</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-cols">
+        <div>
+          <a href="#" class="logo" style="margin-bottom: 14px;">
+            <span class="logo-mark">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 12 7 12 10 4 14 20 17 12 21 12"/>
+              </svg>
+            </span>
+            Pulse
+          </a>
+          <p class="body-text" style="font-size: 13.5px; max-width: 260px; margin-top: 14px;">
+            Product analytics for teams who'd rather ship than instrument.
+          </p>
+        </div>
+        <div>
+          <div class="footer-heading">Product</div>
+          <a href="#" class="footer-link">Funnels</a>
+          <a href="#" class="footer-link">Retention</a>
+          <a href="#" class="footer-link">Session replay</a>
+          <a href="#" class="footer-link">Integrations</a>
+        </div>
+        <div>
+          <div class="footer-heading">Company</div>
+          <a href="#" class="footer-link">About</a>
+          <a href="#" class="footer-link">Careers</a>
+          <a href="#" class="footer-link">Customers</a>
+          <a href="#" class="footer-link">Press kit</a>
+        </div>
+        <div>
+          <div class="footer-heading">Developers</div>
+          <a href="#" class="footer-link">Docs</a>
+          <a href="#" class="footer-link">SDKs</a>
+          <a href="#" class="footer-link">Changelog</a>
+          <a href="#" class="footer-link">Status</a>
+        </div>
+        <div>
+          <div class="footer-heading">Trust</div>
+          <a href="#" class="footer-link">Security</a>
+          <a href="#" class="footer-link">Privacy</a>
+          <a href="#" class="footer-link">Terms</a>
+          <a href="#" class="footer-link">SOC 2 report</a>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--text-muted);">
+        <span>© 2026 Pulse Analytics, Inc. · San Francisco &amp; Berlin</span>
+        <span>All systems normal · status.pulse.io</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to gallery link -->
+  <a href="../demos.html" style="position:fixed;bottom:20px;left:20px;background:rgba(0,0,0,0.85);color:#fff;padding:10px 16px;border-radius:8px;font-family:-apple-system,sans-serif;font-size:13px;text-decoration:none;z-index:9999;backdrop-filter:blur(8px);">← Back to demos</a>
+
+</body>
+</html>

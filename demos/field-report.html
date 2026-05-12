@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Quartermast — A strategy practice that writes.</title>
+  <meta name="description" content="Field notes from operators. A small strategy practice working with founders on growth, pricing, and positioning — and publishing what it learns." />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg:       #F5F0E8;
+      --type:     #111111;
+      --muted:    #525252;
+      --rule:     #1A1A1A;
+      --hairline: #D7D2C8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--type);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 17px;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    .slab { font-family: 'Playfair Display', serif; font-weight: 900; }
+    .smallcaps {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--type);
+    }
+    .rule { border-top: 2px solid var(--rule); }
+    .rule-thin { border-top: 1px solid var(--hairline); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+      border-bottom: 2px solid var(--rule);
+      padding: 14px 0;
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .masthead {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      color: var(--type);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-link {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--type);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .nav-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .nav-meta {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── ABOVE-FOLD: article-style headline ── */
+    .lede {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 70px 40px 50px;
+      border-bottom: 2px solid var(--rule);
+    }
+    .lede-meta {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .lede-meta .dot {
+      width: 5px; height: 5px;
+      background: var(--type);
+      border-radius: 50%;
+    }
+    .lede h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(48px, 7vw, 92px);
+      line-height: 0.98;
+      letter-spacing: -0.025em;
+      margin-bottom: 30px;
+      max-width: 18ch;
+    }
+    .lede-dek {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: clamp(20px, 2.2vw, 26px);
+      line-height: 1.4;
+      color: var(--muted);
+      max-width: 50ch;
+      font-style: italic;
+    }
+    .lede-byline {
+      margin-top: 36px;
+      display: flex;
+      gap: 28px;
+      align-items: baseline;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .lede-byline strong { color: var(--type); font-weight: 500; }
+
+    /* ── EDITORIAL ROWS ── */
+    .editorial-row {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 70px 40px;
+      border-bottom: 1px solid var(--hairline);
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 32px;
+      align-items: center;
+    }
+
+    .col-text-left {
+      grid-column: 1 / span 6;
+    }
+    .col-image-right {
+      grid-column: 7 / span 6;
+    }
+    .col-image-left {
+      grid-column: 1 / span 6;
+    }
+    .col-text-right {
+      grid-column: 7 / span 6;
+    }
+
+    .editorial-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background-size: cover;
+      background-position: center;
+      filter: grayscale(100%) contrast(1.08);
+    }
+
+    .editorial-kicker {
+      margin-bottom: 16px;
+    }
+    .editorial-h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(28px, 3.4vw, 42px);
+      line-height: 1.08;
+      letter-spacing: -0.015em;
+      margin-bottom: 20px;
+    }
+    .editorial-body {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--type);
+      column-fill: balance;
+    }
+    .editorial-body p + p { margin-top: 18px; }
+    .editorial-body a {
+      color: var(--type);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+    }
+
+    /* dropcap */
+    .editorial-body.first p:first-of-type::first-letter {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 68px;
+      float: left;
+      line-height: 0.85;
+      padding: 6px 10px 0 0;
+      color: var(--type);
+    }
+
+    /* ── ARTICLE INDEX ── */
+    .index-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 90px 40px;
+      border-top: 2px solid var(--rule);
+    }
+
+    .index-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--hairline);
+      padding-bottom: 24px;
+      margin-bottom: 12px;
+    }
+    .index-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(28px, 3.2vw, 40px);
+    }
+
+    .article {
+      display: grid;
+      grid-template-columns: 100px 1fr 200px;
+      gap: 40px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--hairline);
+      align-items: baseline;
+    }
+
+    .article-num {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 26px;
+      color: var(--type);
+    }
+    .article-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      font-size: 22px;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+    .article-title a {
+      color: var(--type);
+      text-decoration: none;
+    }
+    .article-title a:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .article-dek {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 6px;
+      max-width: 48ch;
+    }
+    .article-meta {
+      text-align: right;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── CLOSING / WORK WITH US ── */
+    .closing {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 40px 70px;
+      border-top: 2px solid var(--rule);
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 32px;
+    }
+    .closing-text {
+      grid-column: 1 / span 7;
+    }
+    .closing-cta {
+      grid-column: 8 / span 5;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .closing h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(36px, 5vw, 60px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 22px;
+    }
+    .closing p {
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 48ch;
+    }
+    .cta-btn {
+      align-self: flex-start;
+      background: var(--type);
+      color: var(--bg);
+      padding: 18px 32px;
+      text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 500;
+      border: 2px solid var(--type);
+      transition: background 0.2s, color 0.2s;
+    }
+    .cta-btn:hover { background: transparent; color: var(--type); }
+    .cta-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 18px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 50px 40px;
+      border-top: 1px solid var(--hairline);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .nav-inner { padding: 0 20px; }
+      .nav-links { gap: 14px; }
+      .nav-link { font-size: 10px; letter-spacing: 0.12em; }
+      .nav-meta { display: none; }
+      .lede { padding: 40px 20px 30px; }
+      .lede h1 { font-size: 44px; max-width: 100%; }
+      .lede-dek { font-size: 18px; }
+      .lede-byline { flex-direction: column; gap: 8px; }
+      .editorial-row, .index-section, .closing { padding: 40px 20px; grid-template-columns: 1fr; gap: 24px; }
+      .col-text-left, .col-text-right, .col-image-left, .col-image-right,
+      .closing-text, .closing-cta { grid-column: 1 / -1; }
+      .article { grid-template-columns: 50px 1fr; }
+      .article-meta { display: none; }
+      footer { flex-direction: column; gap: 14px; padding: 30px 20px; text-align: center; }
+      .editorial-body.first p:first-of-type::first-letter { font-size: 52px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="masthead">The Quartermast</a>
+      <div class="nav-links">
+        <a href="#essays" class="nav-link">Essays</a>
+        <a href="#practice" class="nav-link">Practice</a>
+        <a href="#index" class="nav-link">Index</a>
+        <a href="#engage" class="nav-link">Engage</a>
+      </div>
+      <span class="nav-meta">Vol. IV · No. 11</span>
+    </div>
+  </nav>
+
+  <!-- LEDE: above-fold article-style headline -->
+  <section class="lede">
+    <div class="lede-meta">
+      <span class="smallcaps">Issue Eleven</span>
+      <span class="dot"></span>
+      <span class="smallcaps">May 2026</span>
+      <span class="dot"></span>
+      <span class="smallcaps">Field Note</span>
+    </div>
+
+    <h1>A strategy practice that writes.</h1>
+
+    <p class="lede-dek">
+      Most consulting work disappears into a slide deck. We publish ours. Field notes from inside the engagement — pricing experiments, positioning rewrites, the bets that worked and the ones we walked away from.
+    </p>
+
+    <div class="lede-byline">
+      <span><strong>Henrik Aune</strong>, founding partner</span>
+      <span>Founded 2021 · Oslo &amp; Brooklyn</span>
+      <span>Currently retained by 7 founders</span>
+    </div>
+  </section>
+
+  <!-- EDITORIAL ROW 1 — text left, image right -->
+  <section class="editorial-row">
+    <div class="col-text-left">
+      <div class="editorial-kicker smallcaps">Practice · Engagements</div>
+      <h2 class="editorial-h2">We work with founders, not founders' marketing teams.</h2>
+      <div class="editorial-body first">
+        <p>The work is pricing, positioning and growth strategy — the three levers that compound when a company is between Series A and Series C, and that nobody else in the org has time to think about clearly. We take three new clients a year. Each engagement is six months, on retainer.</p>
+        <p>We do not run experiments. We do not "operationalize the brand." We write a thesis, defend it against the data we have, and then sit in the room while the founder decides what to do about it.</p>
+      </div>
+    </div>
+    <div class="col-image-right">
+      <div class="editorial-img" style="background-image:url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1400&q=85&auto=format&fit=crop');"></div>
+    </div>
+  </section>
+
+  <!-- EDITORIAL ROW 2 — image left, text right -->
+  <section class="editorial-row">
+    <div class="col-image-left">
+      <div class="editorial-img" style="background-image:url('https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=1400&q=85&auto=format&fit=crop');"></div>
+    </div>
+    <div class="col-text-right">
+      <div class="editorial-kicker smallcaps">Method · Output</div>
+      <h2 class="editorial-h2">A weekly essay is part of the deliverable.</h2>
+      <div class="editorial-body">
+        <p>Every Friday during an engagement, the client receives a thousand-word essay on what we learned that week. Why the experiment failed. Why a customer interview reframed the thesis. What we now think the company should do differently on Monday.</p>
+        <p>Some of those essays — the ones with the client's permission — end up on this site. The rest stay between us.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLE INDEX -->
+  <section id="index" class="index-section">
+    <div class="index-header">
+      <span class="smallcaps">The Index</span>
+      <h2 class="index-title">Recent essays</h2>
+      <span class="smallcaps">28 entries</span>
+    </div>
+
+    <div class="article">
+      <span class="article-num">11</span>
+      <div>
+        <div class="article-title"><a href="#">When "premium" is a price floor disguised as a positioning.</a></div>
+        <p class="article-dek">A B2B SaaS client raised prices 4×. Churn fell. We argue this is not the lesson everyone thinks it is.</p>
+      </div>
+      <div class="article-meta">May 03 · 14 min</div>
+    </div>
+
+    <div class="article">
+      <span class="article-num">10</span>
+      <div>
+        <div class="article-title"><a href="#">The two-week customer council.</a></div>
+        <p class="article-dek">How we run a structured listening process before any pricing or positioning rewrite. Templates included.</p>
+      </div>
+      <div class="article-meta">Apr 18 · 11 min</div>
+    </div>
+
+    <div class="article">
+      <span class="article-num">09</span>
+      <div>
+        <div class="article-title"><a href="#">Why most growth strategy decks die in the boardroom.</a></div>
+        <p class="article-dek">A retrospective on six engagements and the single sentence that determined whether the work survived contact with the operator.</p>
+      </div>
+      <div class="article-meta">Apr 02 · 9 min</div>
+    </div>
+
+    <div class="article">
+      <span class="article-num">08</span>
+      <div>
+        <div class="article-title"><a href="#">Field note: what we got wrong about category creation.</a></div>
+        <p class="article-dek">We spent two years recommending category creation to early-stage clients. A pattern in the data forced us to reverse.</p>
+      </div>
+      <div class="article-meta">Mar 21 · 13 min</div>
+    </div>
+
+    <div class="article">
+      <span class="article-num">07</span>
+      <div>
+        <div class="article-title"><a href="#">The case against the "founder-led sales" gospel.</a></div>
+        <p class="article-dek">A counterpoint, with data, to the most cited piece of early-stage advice in venture.</p>
+      </div>
+      <div class="article-meta">Mar 07 · 10 min</div>
+    </div>
+  </section>
+
+  <!-- ENGAGE -->
+  <section id="engage" class="closing">
+    <div class="closing-text">
+      <span class="smallcaps">Engage</span>
+      <h2 style="margin-top:18px;">We open three retainer slots a year. One is open through July.</h2>
+      <p>If you're between five and forty million in revenue, you have a pricing or positioning question that nobody internal is qualified to answer, and you'd want the essays — we should talk.</p>
+    </div>
+    <div class="closing-cta">
+      <a href="#" class="cta-btn">Begin an inquiry →</a>
+      <p class="cta-note">Replies usually within two business days. We do not work on speculative or unpaid scoping.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>The Quartermast · A strategy practice</span>
+    <span>Oslo · Brooklyn</span>
+    <span>© MMXXVI</span>
+  </footer>
+
+  <a href="../demos.html" style="position:fixed;bottom:20px;left:20px;background:rgba(17,17,17,0.92);color:#F5F0E8;padding:10px 16px;border-radius:8px;font-family:-apple-system,sans-serif;font-size:13px;text-decoration:none;z-index:9999;backdrop-filter:blur(8px);">← Back to demos</a>
+
+</body>
+</html>

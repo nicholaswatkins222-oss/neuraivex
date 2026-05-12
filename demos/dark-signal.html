@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inflect AI — Cold outreach that books real meetings</title>
+  <meta name="description" content="AI-personalized cold email and LinkedIn outbound for B2B SaaS. We build, run, and optimize the pipeline that fills your calendar." />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg-base:      #060810;
+      --bg-surface:   #0D1018;
+      --bg-elevated:  #131722;
+      --border:       #1F2533;
+      --text-primary: #F4F7FA;
+      --text-secondary: #8B95A8;
+      --text-muted:   #4A5468;
+      --accent:       #7CFFB8;
+      --accent-dim:   rgba(124, 255, 184, 0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 128px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .display {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(40px, 6.5vw, 76px);
+      font-weight: 600;
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+    }
+    .section-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+    }
+    .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .body-text {
+      color: var(--text-secondary);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(6, 8, 16, 0.78);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .logo-mark {
+      width: 18px; height: 18px;
+      border-radius: 4px;
+      background: var(--accent);
+      box-shadow: 0 0 14px rgba(124, 255, 184, 0.45);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #060810;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+    .nav-link:hover { color: var(--text-primary); }
+
+    /* Buttons */
+    .btn-primary {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 12px 22px;
+      border-radius: 6px;
+      background: var(--accent);
+      color: #060810;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+      box-shadow: 0 6px 24px rgba(124, 255, 184, 0.18);
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 32px rgba(124, 255, 184, 0.28);
+    }
+    .btn-secondary {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 11px 21px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 180ms ease, background 180ms ease;
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    section { position: relative; z-index: 2; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+
+    /* Hero */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(124, 255, 184, 0.08), transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 30%, rgba(124, 255, 184, 0.04), transparent 70%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(31, 37, 51, 0.6) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31, 37, 51, 0.6) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 0%, transparent 95%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 0%, transparent 95%);
+      pointer-events: none;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 12px;
+      border-radius: 100px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(124, 255, 184, 0.25);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+    }
+    .pill-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.8); }
+    }
+
+    .accent-text { color: var(--accent); }
+
+    /* Stat block */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-top: 80px;
+    }
+    .stat-cell {
+      padding: 32px 24px;
+      border-right: 1px solid var(--border);
+      text-align: left;
+    }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 4vw, 44px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .stat-accent { color: var(--accent); }
+
+    /* Outcome cards */
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 32px;
+      transition: border-color 240ms ease, transform 240ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      border-color: rgba(124, 255, 184, 0.3);
+      transform: translateY(-2px);
+    }
+    .card-mark {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+    }
+    .card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+      margin-bottom: 12px;
+    }
+    .card-text {
+      color: var(--text-secondary);
+      font-size: 14.5px;
+      line-height: 1.65;
+    }
+
+    /* Code block */
+    .code-block {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      overflow-x: auto;
+    }
+    .code-block .k { color: var(--accent); }
+    .code-block .s { color: #FFD580; }
+    .code-block .c { color: var(--text-muted); font-style: italic; }
+
+    /* Case study strip */
+    .case-strip {
+      background: #04060C;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 80px 0;
+      position: relative;
+    }
+    .case-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px;
+      transition: border-color 200ms ease;
+    }
+    .case-card:hover { border-color: rgba(124, 255, 184, 0.3); }
+    .case-quote {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+    }
+    .case-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .case-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2A3142, #131722);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .case-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .case-role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* Process steps */
+    .step-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.16em;
+      margin-bottom: 16px;
+    }
+
+    /* CTA section */
+    .cta-frame {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 72px 48px;
+      background: linear-gradient(135deg, var(--bg-surface), var(--bg-elevated));
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-frame::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.5;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .container { padding: 0 20px; }
+      .nav-links { display: none; }
+      .stat-row { grid-template-columns: 1fr; }
+      .stat-cell { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat-cell:last-child { border-bottom: none; }
+      .grid-3 { grid-template-columns: 1fr !important; }
+      .grid-2 { grid-template-columns: 1fr !important; }
+      .cta-frame { padding: 48px 24px; }
+      .case-strip { padding: 56px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo">
+      <span class="logo-mark">/</span>
+      Inflect<span style="color: var(--accent);">.</span>
+    </a>
+    <div class="nav-links">
+      <a href="#how" class="nav-link">how it works</a>
+      <a href="#outcomes" class="nav-link">outcomes</a>
+      <a href="#results" class="nav-link">results</a>
+      <a href="#pricing" class="nav-link">pricing</a>
+    </div>
+    <a href="#book" class="btn-primary">book intro call →</a>
+  </nav>
+
+  <!-- HERO -->
+  <section style="padding-top: 160px; padding-bottom: 96px; overflow: hidden;">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+
+    <div class="container" style="position: relative; z-index: 2;">
+      <div style="margin-bottom: 28px;">
+        <span class="pill"><span class="pill-dot"></span>currently onboarding · q2 cohort</span>
+      </div>
+
+      <h1 class="display" style="max-width: 880px; margin-bottom: 28px;">
+        Cold outreach that<br />
+        actually <span class="accent-text">books meetings.</span>
+      </h1>
+
+      <p class="body-text" style="max-width: 580px; font-size: 18px; margin-bottom: 40px;">
+        We run AI-personalized cold email and LinkedIn sequences for B2B SaaS — researched per-account, optimized weekly, and tied to one number: meetings on your calendar.
+      </p>
+
+      <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 24px;">
+        <a href="#book" class="btn-primary" style="font-size: 14px; padding: 14px 26px;">book intro call →</a>
+        <a href="#results" class="btn-secondary" style="font-size: 14px; padding: 13px 25px;">see case studies</a>
+      </div>
+
+      <p class="mono" style="font-size: 12px; color: var(--text-muted); letter-spacing: 0.06em;">
+        no retainers · paid per qualified meeting · 14-day pilot available
+      </p>
+
+      <!-- Stat row -->
+      <div class="stat-row">
+        <div class="stat-cell">
+          <div class="stat-num"><span class="stat-accent">1,247</span></div>
+          <div class="stat-label">meetings booked this quarter</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">4.2%</div>
+          <div class="stat-label">avg positive reply rate</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">$38.4M</div>
+          <div class="stat-label">pipeline sourced ytd</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" style="padding: 112px 0;">
+    <div class="container">
+      <div style="margin-bottom: 64px; max-width: 640px;">
+        <div class="label" style="margin-bottom: 16px;">// how it works</div>
+        <h2 class="section-heading">
+          One system. Built around your ICP.<br />
+          Tuned every Monday.
+        </h2>
+      </div>
+
+      <div class="grid-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+
+        <div class="card">
+          <div class="step-num">01 / signal</div>
+          <div class="card-title">We define a target you can recognize.</div>
+          <p class="card-text">
+            Apollo, Clay, and intent signals (G2 visits, hiring posts, funding events) get filtered through your ICP. Every lead has a reason to be on the list.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="step-num">02 / send</div>
+          <div class="card-title">Personalized at the account level. Not at the variable level.</div>
+          <p class="card-text">
+            Claude reads each prospect's site, recent posts, and stack — then writes the first line. No <span class="mono accent-text">{{firstName}}</span> tricks. Reply rates that survive spam filters.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="step-num">03 / iterate</div>
+          <div class="card-title">Variants that don't book get killed by Friday.</div>
+          <p class="card-text">
+            Every Sunday, our analyzer auto-pauses any variant under 0.5% positive reply rate after 50 sends. The winners scale. The losers die quietly.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Code block -->
+      <div style="margin-top: 56px; max-width: 720px;">
+        <div class="mono" style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px; letter-spacing: 0.1em;">// reply classifier — production</div>
+        <div class="code-block">
+<span class="c"># classify inbound reply, route to slack</span>
+<span class="k">def</span> classify(reply: <span class="k">str</span>) -> <span class="k">dict</span>:
+  result = claude.run(reply, model=<span class="s">"haiku-4-7"</span>)
+  <span class="k">if</span> result.intent == <span class="s">"interested"</span>:
+    slack.alert(channel=<span class="s">"#meetings"</span>, payload=result)
+  airtable.write(table=<span class="s">"replies"</span>, record=result)
+  <span class="k">return</span> result
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTCOMES (three-column) -->
+  <section id="outcomes" style="padding: 96px 0; background: #04060C; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <div style="margin-bottom: 56px; max-width: 600px;">
+        <div class="label" style="margin-bottom: 16px;">// what you get</div>
+        <h2 class="section-heading">Three outcomes. No deliverables.</h2>
+      </div>
+
+      <div class="grid-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+        <div class="card">
+          <div class="card-mark">— qualified meetings</div>
+          <div class="card-title">8–24 booked calls per month, post-ramp.</div>
+          <p class="card-text">
+            We don't count "interested" replies. We count meetings that show up. Average ramp: 21 days from kickoff to first booked call.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-mark">— pipeline you can model</div>
+          <div class="card-title">Per-lead attribution into your CRM.</div>
+          <p class="card-text">
+            Salesforce or HubSpot push on every reply, meeting, and outcome. Your RevOps team gets the same dashboard we do — read-only, real-time.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-mark">— infrastructure you own</div>
+          <div class="card-title">Domains, mailboxes, copy library — yours at offboarding.</div>
+          <p class="card-text">
+            We set up dedicated sending infrastructure under your control. You leave with the system intact. No lock-in, no proprietary tooling.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE STUDY STRIP -->
+  <section id="results" class="case-strip">
+    <div class="container">
+      <div style="margin-bottom: 48px; max-width: 640px;">
+        <div class="label" style="margin-bottom: 16px;">// results</div>
+        <h2 class="section-heading">Numbers from the last 90 days.</h2>
+      </div>
+
+      <div class="grid-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+
+        <div class="case-card">
+          <div class="mono" style="font-size: 11px; color: var(--accent); margin-bottom: 16px; letter-spacing: 0.1em;">SERIES B · DEVTOOLS</div>
+          <p class="case-quote">"42 demos in 9 weeks, four closed inside that window. Their replacement for our SDR team paid for itself in the first month."</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+            <div>
+              <div class="mono" style="font-size: 20px; color: var(--accent); font-weight: 600;">42</div>
+              <div class="mono" style="font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em;">DEMOS BOOKED</div>
+            </div>
+            <div>
+              <div class="mono" style="font-size: 20px; color: var(--text-primary); font-weight: 600;">$340K</div>
+              <div class="mono" style="font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em;">PIPELINE</div>
+            </div>
+          </div>
+          <div class="case-meta">
+            <div class="case-avatar">MK</div>
+            <div>
+              <div class="case-name">M. Karras</div>
+              <div class="case-role">VP Sales · Helmtrace</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <div class="mono" style="font-size: 11px; color: var(--accent); margin-bottom: 16px; letter-spacing: 0.1em;">SEED · FINTECH API</div>
+          <p class="case-quote">"We tried two other agencies and an SDR hire. Inflect was the first thing that actually filled the calendar without us micromanaging copy."</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+            <div>
+              <div class="mono" style="font-size: 20px; color: var(--accent); font-weight: 600;">5.8%</div>
+              <div class="mono" style="font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em;">REPLY RATE</div>
+            </div>
+            <div>
+              <div class="mono" style="font-size: 20px; color: var(--text-primary); font-weight: 600;">19</div>
+              <div class="mono" style="font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em;">DAYS TO FIRST</div>
+            </div>
+          </div>
+          <div class="case-meta">
+            <div class="case-avatar">RB</div>
+            <div>
+              <div class="case-name">R. Banerjee</div>
+              <div class="case-role">Founder · Slipstream</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-card">
+          <div class="mono" style="font-size: 11px; color: var(--accent); margin-bottom: 16px; letter-spacing: 0.1em;">SERIES A · MARKETING SAAS</div>
+          <p class="case-quote">"Their reply classifier alone saved our AEs four hours a week. We just see the live ones, in a Slack channel, with context already attached."</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+            <div>
+              <div class="mono" style="font-size: 20px; color: var(--accent); font-weight: 600;">73</div>
+              <div class="mono" style="font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em;">MEETINGS Q1</div>
+            </div>
+            <div>
+              <div class="mono" style="font-size: 20px; color: var(--text-primary); font-weight: 600;">$1.1M</div>
+              <div class="mono" style="font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em;">SOURCED ARR</div>
+            </div>
+          </div>
+          <div class="case-meta">
+            <div class="case-avatar">JL</div>
+            <div>
+              <div class="case-name">J. Lindqvist</div>
+              <div class="case-role">CMO · Northcast</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING / SECONDARY CTA -->
+  <section id="pricing" style="padding: 112px 0;">
+    <div class="container">
+      <div style="margin-bottom: 56px; max-width: 600px;">
+        <div class="label" style="margin-bottom: 16px;">// pricing</div>
+        <h2 class="section-heading">One tier. Tied to meetings.</h2>
+        <p class="body-text" style="margin-top: 16px;">
+          We don't sell deliverables. You pay a base for infrastructure plus a per-qualified-meeting rate. If we don't book, we don't earn the upside.
+        </p>
+      </div>
+
+      <div class="grid-2" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px;">
+
+        <div class="card" style="padding: 40px;">
+          <div class="mono" style="font-size: 12px; color: var(--accent); letter-spacing: 0.12em; margin-bottom: 24px;">// OPERATOR — $4,800 / mo + $250 / qualified meeting</div>
+          <div class="card-title" style="font-size: 26px; margin-bottom: 20px;">For founders and revenue leaders who want pipeline, not progress reports.</div>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 14px; padding: 24px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 28px;">
+            <li class="mono" style="font-size: 13px; color: var(--text-secondary);"><span class="accent-text">→</span> &nbsp;dedicated sending infrastructure (8 domains, 24 mailboxes)</li>
+            <li class="mono" style="font-size: 13px; color: var(--text-secondary);"><span class="accent-text">→</span> &nbsp;account-level personalization on every email</li>
+            <li class="mono" style="font-size: 13px; color: var(--text-secondary);"><span class="accent-text">→</span> &nbsp;LinkedIn outbound parallel track (200 connects / wk)</li>
+            <li class="mono" style="font-size: 13px; color: var(--text-secondary);"><span class="accent-text">→</span> &nbsp;weekly variant analysis + auto-pause</li>
+            <li class="mono" style="font-size: 13px; color: var(--text-secondary);"><span class="accent-text">→</span> &nbsp;crm push, slack alerts, reply classifier</li>
+            <li class="mono" style="font-size: 13px; color: var(--text-secondary);"><span class="accent-text">→</span> &nbsp;monthly strategy call, weekly written report</li>
+          </ul>
+          <a href="#book" class="btn-primary">book intro call →</a>
+        </div>
+
+        <div style="padding: 40px 0;">
+          <div class="mono" style="font-size: 12px; color: var(--text-muted); letter-spacing: 0.12em; margin-bottom: 24px;">// 14-DAY PILOT</div>
+          <div class="card-title" style="font-size: 22px; margin-bottom: 16px;">Not ready to commit? Run a paid pilot.</div>
+          <p class="body-text" style="font-size: 14.5px; margin-bottom: 24px;">
+            $2,400 for 14 days. One ICP, one sequence, 600 sends. If we don't generate at least 3 qualified replies, we refund the engagement and you keep the copy library.
+          </p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px;">
+            <li class="mono" style="font-size: 13px; color: var(--text-secondary);"><span class="accent-text">→</span> &nbsp;icp validation in week 1</li>
+            <li class="mono" style="font-size: 13px; color: var(--text-secondary);"><span class="accent-text">→</span> &nbsp;live reply review with founders</li>
+            <li class="mono" style="font-size: 13px; color: var(--text-secondary);"><span class="accent-text">→</span> &nbsp;converts to operator tier at week 2</li>
+          </ul>
+          <a href="#book" class="btn-secondary">request pilot →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOK CTA -->
+  <section id="book" style="padding: 96px 0 120px;">
+    <div class="container">
+      <div class="cta-frame">
+        <div style="text-align: center; max-width: 640px; margin: 0 auto;">
+          <div class="label" style="margin-bottom: 20px;">// next step</div>
+          <h2 class="display" style="font-size: clamp(36px, 5vw, 56px); margin-bottom: 20px;">
+            See if your ICP<br />is one we can <span class="accent-text">actually book.</span>
+          </h2>
+          <p class="body-text" style="font-size: 16px; max-width: 460px; margin: 0 auto 36px;">
+            30 minutes. We'll pull a sample list, show you what our personalization looks like for your accounts, and quote the engagement.
+          </p>
+          <a href="#" class="btn-primary" style="font-size: 14px; padding: 16px 32px;">book intro call →</a>
+          <div class="mono" style="font-size: 11px; color: var(--text-muted); margin-top: 24px; letter-spacing: 0.08em;">
+            no slide decks · no fake urgency · qualified-out is fine
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <a href="#" class="logo" style="font-size: 14px;">
+        <span class="logo-mark">/</span>
+        Inflect<span style="color: var(--accent);">.</span>
+      </a>
+      <span>© 2026 Inflect AI, Inc. · cold outreach that books meetings · operating from Austin, TX</span>
+    </div>
+  </footer>
+
+  <!-- Back to gallery link -->
+  <a href="../demos.html" style="position:fixed;bottom:20px;left:20px;background:rgba(0,0,0,0.85);color:#fff;padding:10px 16px;border-radius:8px;font-family:-apple-system,sans-serif;font-size:13px;text-decoration:none;z-index:9999;backdrop-filter:blur(8px);">← Back to demos</a>
+
+  <script>
+    // Animated counter
+    function animateCount(el, target, duration = 1600, formatter = (n) => Math.floor(n).toLocaleString()) {
+      const start = performance.now();
+      const startValue = 0;
+      function tick(now) {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = formatter(startValue + (target - startValue) * eased);
+        if (t < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    const observed = new WeakSet();
+    const cobs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !observed.has(entry.target)) {
+          observed.add(entry.target);
+          const el = entry.target;
+          const target = parseFloat(el.dataset.target);
+          const prefix = el.dataset.prefix || '';
+          const suffix = el.dataset.suffix || '';
+          const decimals = parseInt(el.dataset.decimals || '0');
+          animateCount(el, target, 1600, n => prefix + n.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + suffix);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    // Tag stat elements
+    document.querySelectorAll('.stat-num').forEach(el => {
+      const span = el.querySelector('span') || el;
+      const raw = span.textContent.trim();
+      const match = raw.match(/([^\d.]*)([\d,.]+)(.*)$/);
+      if (match) {
+        const [_, prefix, num, suffix] = match;
+        const cleanNum = parseFloat(num.replace(/,/g, ''));
+        span.dataset.target = cleanNum;
+        span.dataset.prefix = prefix;
+        span.dataset.suffix = suffix;
+        span.dataset.decimals = num.includes('.') ? num.split('.')[1].length : 0;
+        span.textContent = prefix + '0' + suffix;
+        cobs.observe(span);
+      }
+    });
+  </script>
+
+</body>
+</html>

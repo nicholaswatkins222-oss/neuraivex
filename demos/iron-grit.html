@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Halcyon Roofing & Exteriors — Denver's Commercial Roofing Specialists</title>
+  <meta name="description" content="Halcyon Roofing & Exteriors. Industrial, warehouse & retail roofing across the Front Range. TPO, modified bitumen, and standing-seam metal. Licensed CO contractors since 2007." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --ink:        #14181F;
+      --ink-2:      #1F2630;
+      --ink-3:      #2A3340;
+      --line:       #3A4453;
+      --bone:       #F1ECE3;
+      --paper:      #F7F4EE;
+      --orange:     #FF6B00;
+      --orange-dk:  #D85A00;
+      --steel:      #8C97A6;
+    }
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, .display {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      line-height: 1.02;
+    }
+    .eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 13px;
+    }
+    .btn-primary {
+      background: var(--orange);
+      color: #fff;
+      padding: 16px 28px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 17px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 2px solid var(--orange);
+      transition: background .15s ease, transform .15s ease;
+    }
+    .btn-primary:hover { background: var(--orange-dk); border-color: var(--orange-dk); }
+    .btn-ghost {
+      background: transparent;
+      color: #fff;
+      padding: 14px 26px;
+      border: 2px solid #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 17px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: background .15s ease, color .15s ease;
+    }
+    .btn-ghost:hover { background: #fff; color: var(--ink); }
+    .container-x { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+    /* sticky call bar */
+    .sticky-call {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--ink);
+      color: #fff;
+      border-bottom: 1px solid var(--ink-3);
+    }
+    .sticky-call .inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; padding: 10px 24px;
+      max-width: 1240px; margin: 0 auto;
+      font-size: 14px;
+    }
+    .sticky-call a.phone {
+      color: #fff; font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 20px; letter-spacing: 0.04em;
+      display: inline-flex; align-items: center; gap: 8px;
+      text-transform: uppercase;
+    }
+    .sticky-call a.phone:hover { color: var(--orange); }
+    .sticky-call .pill {
+      background: var(--orange); color: #fff;
+      padding: 4px 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; letter-spacing: 0.08em;
+      font-size: 12px; text-transform: uppercase;
+    }
+    /* top nav */
+    nav.top {
+      background: var(--ink-2);
+      border-bottom: 1px solid var(--ink-3);
+      color: #fff;
+    }
+    nav.top .inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px;
+      max-width: 1240px; margin: 0 auto;
+    }
+    nav.top .brand {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 22px;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: #fff;
+      display: flex; align-items: center; gap: 12px;
+    }
+    nav.top .brand .badge {
+      width: 36px; height: 36px;
+      background: var(--orange);
+      display: grid; place-items: center;
+      color: #fff;
+    }
+    nav.top .links a {
+      color: #fff; opacity: .8;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600; font-size: 16px;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      margin-left: 28px;
+    }
+    nav.top .links a:hover { opacity: 1; color: var(--orange); }
+    @media (max-width: 768px) { nav.top .links { display: none; } }
+
+    /* HERO */
+    .hero {
+      background: var(--ink);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 0;
+      min-height: 620px;
+    }
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; min-height: auto; }
+    }
+    .hero-text {
+      padding: 80px 64px 80px 0;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    @media (max-width: 1100px) { .hero-text { padding: 64px 24px; } }
+    .hero-text h1 {
+      font-size: clamp(44px, 7vw, 88px);
+      line-height: 0.96;
+      letter-spacing: -0.01em;
+    }
+    .hero-text h1 .orange { color: var(--orange); }
+    .hero-text p.lede {
+      font-size: 19px; line-height: 1.55;
+      color: #C9D0DB;
+      max-width: 540px;
+      margin: 24px 0 36px;
+    }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--ink-3);
+      margin-top: 48px;
+    }
+    .hero-stats .cell {
+      padding: 24px 16px 0 0;
+      border-right: 1px solid var(--ink-3);
+    }
+    .hero-stats .cell:last-child { border-right: 0; padding-right: 0; }
+    .hero-stats .num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 44px; font-weight: 800; color: var(--orange);
+      line-height: 1;
+    }
+    .hero-stats .lbl {
+      font-size: 12px; color: #C9D0DB;
+      text-transform: uppercase; letter-spacing: 0.16em;
+      margin-top: 6px;
+    }
+    .hero-img {
+      position: relative;
+      min-height: 100%;
+      background-image: url('https://images.unsplash.com/photo-1632759145355-3d7820dbf9e1?w=1600&q=80&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      border-left: 4px solid var(--orange);
+    }
+    .hero-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(20,24,31,0) 40%, rgba(20,24,31,0.65) 100%);
+    }
+    .hero-img-stamp {
+      position: absolute;
+      left: 24px; bottom: 24px;
+      background: var(--orange);
+      color: #fff;
+      padding: 14px 18px;
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      max-width: 280px;
+      z-index: 2;
+    }
+    .hero-img-stamp .big {
+      font-size: 30px; font-weight: 800; line-height: 1;
+    }
+    .hero-img-stamp .sm {
+      font-size: 13px; letter-spacing: 0.14em; margin-top: 4px; opacity: .92;
+    }
+
+    /* Trust strip */
+    .trust-strip {
+      background: var(--ink-2);
+      color: #fff;
+      border-top: 1px solid var(--ink-3);
+      border-bottom: 1px solid var(--ink-3);
+    }
+    .trust-strip .inner {
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px 32px;
+      padding: 22px 24px;
+      max-width: 1240px; margin: 0 auto;
+      align-items: center;
+    }
+    .trust-strip .item {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      font-size: 14px;
+    }
+    .trust-strip .item i { color: var(--orange); font-size: 18px; }
+
+    /* Section */
+    .sec { padding: 96px 0; }
+    @media (max-width: 768px) { .sec { padding: 64px 0; } }
+    .sec h2 {
+      font-size: clamp(36px, 5vw, 56px);
+      letter-spacing: -0.01em;
+    }
+    .sec .head-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+      align-items: end; margin-bottom: 56px;
+    }
+    @media (max-width: 900px) { .sec .head-row { grid-template-columns: 1fr; gap: 24px; } }
+    .sec .head-row p { color: #4A5260; font-size: 17px; }
+
+    /* Services */
+    .svc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 900px) { .svc-grid { grid-template-columns: 1fr; } }
+    .svc {
+      background: #fff;
+      border: 1px solid #E2DED4;
+      padding: 32px;
+      position: relative;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+    .svc:hover { transform: translateY(-4px); border-color: var(--orange); }
+    .svc .ico {
+      width: 56px; height: 56px;
+      background: var(--ink);
+      color: var(--orange);
+      display: grid; place-items: center;
+      font-size: 22px;
+      margin-bottom: 24px;
+    }
+    .svc h3 { font-size: 26px; margin-bottom: 8px; }
+    .svc p { color: #4A5260; font-size: 15px; margin-bottom: 20px; }
+    .svc .proof {
+      border-top: 1px solid #E2DED4;
+      padding-top: 16px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 14px;
+      color: var(--orange);
+    }
+
+    /* Before/After */
+    .ba-wrap { background: var(--ink); color: #fff; }
+    .ba-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+    }
+    @media (max-width: 768px) { .ba-grid { grid-template-columns: 1fr; } }
+    .ba-cell {
+      position: relative;
+      aspect-ratio: 4/3;
+      background-size: cover; background-position: center;
+    }
+    .ba-cell .tag {
+      position: absolute; top: 16px; left: 16px;
+      background: var(--orange); color: #fff;
+      padding: 6px 12px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; letter-spacing: 0.14em;
+      font-size: 13px; text-transform: uppercase;
+    }
+    .ba-cell.before .tag { background: var(--ink-3); }
+    .ba-meta {
+      padding: 32px 24px 48px;
+      text-align: center;
+    }
+    .ba-meta h3 { font-size: 32px; margin-bottom: 6px; }
+    .ba-meta p { color: #C9D0DB; }
+
+    /* Process */
+    .process {
+      background: var(--bone);
+    }
+    .process-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    }
+    @media (max-width: 900px) { .process-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 500px) { .process-grid { grid-template-columns: 1fr; } }
+    .step {
+      background: #fff;
+      border-left: 4px solid var(--orange);
+      padding: 28px;
+    }
+    .step .n {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 64px; line-height: 1; color: var(--ink-3); font-weight: 800;
+    }
+    .step h4 { font-size: 22px; margin: 8px 0 6px; }
+    .step p { color: #4A5260; font-size: 15px; }
+
+    /* CTA */
+    .cta-band {
+      background: var(--ink);
+      color: #fff;
+      padding: 80px 0;
+      position: relative; overflow: hidden;
+    }
+    .cta-band::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1518481612222-68bbe828ecd1?w=1600&q=80&auto=format&fit=crop');
+      background-size: cover; background-position: center;
+      opacity: 0.18;
+    }
+    .cta-band .inner { position: relative; z-index: 2; text-align: center; }
+    .cta-band h2 { font-size: clamp(36px, 5vw, 64px); margin-bottom: 18px; }
+    .cta-band p { color: #C9D0DB; font-size: 18px; max-width: 580px; margin: 0 auto 32px; }
+    .cta-band .row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+    /* Footer */
+    footer {
+      background: var(--ink-2);
+      color: #C9D0DB;
+      padding: 56px 0 24px;
+    }
+    footer .grid {
+      display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 900px) { footer .grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 500px) { footer .grid { grid-template-columns: 1fr; } }
+    footer h4 {
+      color: #fff; font-size: 18px; margin-bottom: 16px;
+      letter-spacing: 0.1em;
+    }
+    footer a { color: #C9D0DB; font-size: 14px; display: block; padding: 4px 0; }
+    footer a:hover { color: var(--orange); }
+    footer .legal {
+      border-top: 1px solid var(--ink-3);
+      padding-top: 20px;
+      font-size: 13px;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+    .lic {
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 0.1em;
+      color: var(--orange);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sticky click-to-call bar -->
+<div class="sticky-call">
+  <div class="inner">
+    <span class="pill"><i class="fas fa-bolt"></i> 24/7 Storm Response</span>
+    <a href="tel:7203045511" class="phone"><i class="fas fa-phone-volume"></i> (720) 304-5511</a>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav class="top">
+  <div class="inner">
+    <a href="#" class="brand">
+      <span class="badge"><i class="fas fa-hard-hat"></i></span>
+      Halcyon Roofing &amp; Exteriors
+    </a>
+    <div class="links">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Get a Quote</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container-x">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <span class="eyebrow" style="color: var(--orange);"><i class="fas fa-map-marker-alt"></i>&nbsp; Denver · Aurora · Lakewood · Front Range</span>
+        <h1 style="margin-top: 14px;">Commercial<br />Roofs Built<br />To <span class="orange">Outlast</span><br />The Job Site.</h1>
+        <p class="lede">
+          We re-roof warehouses, retail centers, and industrial facilities across the Front Range — TPO, modified bitumen, and standing-seam metal. No salesy fluff. A real superintendent on every project.
+        </p>
+        <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+          <a href="tel:7203045511" class="btn-primary"><i class="fas fa-phone"></i> Get a Roof Estimate</a>
+          <a href="#work" class="btn-ghost">See Past Projects</a>
+        </div>
+        <div class="hero-stats">
+          <div class="cell">
+            <div class="num">1.4M</div>
+            <div class="lbl">Sq Ft Installed</div>
+          </div>
+          <div class="cell">
+            <div class="num">19 yrs</div>
+            <div class="lbl">On Front Range Roofs</div>
+          </div>
+          <div class="cell">
+            <div class="num">0</div>
+            <div class="lbl">OSHA Recordables 2024</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-img">
+        <div class="hero-img-stamp">
+          <div class="big">86,400 sq ft</div>
+          <div class="sm">TPO replacement · Aurora warehouse · 11 days on site</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust strip -->
+<div class="trust-strip">
+  <div class="inner">
+    <span class="item"><i class="fas fa-shield-halved"></i> Licensed CO Contractor</span>
+    <span class="item"><i class="fas fa-certificate"></i> GAF Master Select</span>
+    <span class="item"><i class="fas fa-id-badge"></i> Carlisle SynTec Authorized</span>
+    <span class="item"><i class="fas fa-check-circle"></i> $4M General Liability</span>
+    <span class="item"><i class="fas fa-truck-fast"></i> Storm Response In 4 Hrs</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="sec" id="services" style="background: var(--paper);">
+  <div class="container-x">
+    <div class="head-row">
+      <div>
+        <span class="eyebrow" style="color: var(--orange);">What We Do</span>
+        <h2 style="margin-top: 12px;">Heavy-Duty<br />Roofing Systems<br />For Heavy-Duty Buildings.</h2>
+      </div>
+      <p>We don't chase residential reroofs. Our crews work flat, low-slope, and standing-seam systems on the buildings that keep Denver running — distribution centers, manufacturing plants, retail boxes, and HOA flat-roof portfolios.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc">
+        <div class="ico"><i class="fas fa-layer-group"></i></div>
+        <h3>TPO Membrane Systems</h3>
+        <p>60-mil and 80-mil mechanically-attached and fully-adhered TPO from Carlisle, GAF, and Versico. NDL warranties up to 30 years on qualifying installs.</p>
+        <div class="proof">Avg install: 9 days per 50,000 sq ft</div>
+      </div>
+      <div class="svc">
+        <div class="ico"><i class="fas fa-fire"></i></div>
+        <h3>Modified Bitumen (Mod-Bit)</h3>
+        <p>Two-ply SBS and APP systems on warehouses, schools, and mid-rise multifamily. Self-adhered or torch-applied, granular cap sheet finish for UV durability.</p>
+        <div class="proof">23 schools re-roofed across CO &amp; WY</div>
+      </div>
+      <div class="svc">
+        <div class="ico"><i class="fas fa-industry"></i></div>
+        <h3>Standing-Seam Metal</h3>
+        <p>24-gauge Galvalume and Kynar-coated steel panels on retail, ag, and self-storage. We roll-form panels on-site to length — no field splices, no leaks.</p>
+        <div class="proof">40-yr panel + 20-yr finish warranty</div>
+      </div>
+      <div class="svc">
+        <div class="ico"><i class="fas fa-droplet"></i></div>
+        <h3>Roof Coatings &amp; Restoration</h3>
+        <p>Silicone and acrylic coatings that extend an aging roof 10–15 years without the capital cost of replacement. Tax-deductible as repair on commercial books.</p>
+        <div class="proof">Avg savings: 62% vs full replacement</div>
+      </div>
+      <div class="svc">
+        <div class="ico"><i class="fas fa-cloud-bolt"></i></div>
+        <h3>Storm &amp; Hail Response</h3>
+        <p>Tarp and dry-in within 4 hours of a hailstorm or wind event. We document for insurance, work directly with adjusters, and don't disappear when the deductible is signed.</p>
+        <div class="proof">96-hr avg insurance turnaround</div>
+      </div>
+      <div class="svc">
+        <div class="ico"><i class="fas fa-house-chimney-crack"></i></div>
+        <h3>Preventive Maintenance</h3>
+        <p>Annual or bi-annual inspections, drain clearing, flashing repair, and sealant refresh. Quarterly reports per building. Keeps NDL warranties active.</p>
+        <div class="proof">Portfolios from 4 to 80 roofs</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Before/After -->
+<section class="ba-wrap" id="work">
+  <div class="ba-grid">
+    <div class="ba-cell before" style="background-image: url('https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1200&q=80&auto=format&fit=crop');">
+      <span class="tag">Before</span>
+    </div>
+    <div class="ba-cell" style="background-image: url('https://images.unsplash.com/photo-1592928038403-5c27bd11d535?w=1200&q=80&auto=format&fit=crop');">
+      <span class="tag">After</span>
+    </div>
+  </div>
+  <div class="ba-meta">
+    <span class="eyebrow" style="color: var(--orange);">Project · Commerce City, CO</span>
+    <h3 style="margin-top: 10px;">112,000 sq ft distribution center</h3>
+    <p>Failed 17-year EPDM replaced with 80-mil fully-adhered TPO, new tapered ISO, and 24 internal drains rebuilt. Tenant stayed operational the entire build.</p>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="sec process" id="process">
+  <div class="container-x">
+    <div class="head-row">
+      <div>
+        <span class="eyebrow" style="color: var(--orange);">How A Job Runs</span>
+        <h2 style="margin-top: 12px;">A Real Schedule.<br />A Real Foreman.<br />A Real Roof.</h2>
+      </div>
+      <p>Roofs go sideways when there's no chain of command. Every Halcyon project gets a dedicated superintendent, a daily on-site report, and a punch list signed off in person — not a portal screenshot.</p>
+    </div>
+    <div class="process-grid">
+      <div class="step">
+        <div class="n">01</div>
+        <h4>Field Inspection</h4>
+        <p>Drone scan + walk-through within 48 hours. Core samples and moisture readings, not a windshield estimate.</p>
+      </div>
+      <div class="step">
+        <div class="n">02</div>
+        <h4>Engineered Scope</h4>
+        <p>Stamped drawings, manufacturer spec, and a fixed-price proposal with line-item quantities you can verify.</p>
+      </div>
+      <div class="step">
+        <div class="n">03</div>
+        <h4>Build Phase</h4>
+        <p>Tear-off, deck repair, insulation, membrane, flashings. Daily logs and photo dailies emailed to the owner every PM.</p>
+      </div>
+      <div class="step">
+        <div class="n">04</div>
+        <h4>Warranty Handoff</h4>
+        <p>Manufacturer inspection, NDL warranty registered, O&amp;M binder delivered, first annual inspection scheduled.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Band -->
+<section class="cta-band" id="contact">
+  <div class="container-x inner">
+    <span class="eyebrow" style="color: var(--orange);">Estimates within 5 business days</span>
+    <h2 style="margin-top: 14px;">Got a roof that's<br />on its last winter?</h2>
+    <p>Send us the address. We'll get a crew on the roof, pull core samples, and have a real scope on your desk before next Friday.</p>
+    <div class="row">
+      <a href="tel:7203045511" class="btn-primary"><i class="fas fa-phone"></i> Call (720) 304-5511</a>
+      <a href="#" class="btn-ghost"><i class="fas fa-clipboard-list"></i> Request an Estimate</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container-x">
+    <div class="grid">
+      <div>
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+          <span style="width:36px;height:36px;background:var(--orange);display:grid;place-items:center;color:#fff;"><i class="fas fa-hard-hat"></i></span>
+          <strong style="color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:22px;letter-spacing:0.06em;text-transform:uppercase;">Halcyon Roofing</strong>
+        </div>
+        <p style="font-size:14px;color:#8C97A6;max-width:280px;">Commercial roofing and exteriors built for Front Range weather. Family-owned since 2007.</p>
+        <p class="lic" style="margin-top:14px;">CO Lic. #ROOF-118842</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <a href="#services">TPO Membrane</a>
+        <a href="#services">Modified Bitumen</a>
+        <a href="#services">Standing-Seam Metal</a>
+        <a href="#services">Roof Coatings</a>
+        <a href="#services">Storm Response</a>
+      </div>
+      <div>
+        <h4>Service Area</h4>
+        <a href="#">Denver</a>
+        <a href="#">Aurora</a>
+        <a href="#">Lakewood</a>
+        <a href="#">Commerce City</a>
+        <a href="#">Boulder · Loveland</a>
+      </div>
+      <div>
+        <h4>Reach Us</h4>
+        <a href="tel:7203045511"><i class="fas fa-phone"></i>&nbsp; (720) 304-5511</a>
+        <a href="mailto:bid@halcyonroof.co"><i class="fas fa-envelope"></i>&nbsp; bid@halcyonroof.co</a>
+        <a href="#"><i class="fas fa-location-dot"></i>&nbsp; 4180 N Washington St, Denver, CO 80216</a>
+      </div>
+    </div>
+    <div class="legal">
+      <span>&copy; 2026 Halcyon Roofing &amp; Exteriors LLC. All rights reserved.</span>
+      <span><a href="#" style="display:inline;">Privacy</a> &nbsp;·&nbsp; <a href="#" style="display:inline;">Terms</a></span>
+    </div>
+  </div>
+</footer>
+
+<a href="../demos.html" style="position:fixed;bottom:20px;left:20px;background:rgba(0,0,0,0.85);color:#fff;padding:10px 16px;border-radius:8px;font-family:-apple-system,sans-serif;font-size:13px;text-decoration:none;z-index:9999;backdrop-filter:blur(8px);">← Back to demos</a>
+
+</body>
+</html>
